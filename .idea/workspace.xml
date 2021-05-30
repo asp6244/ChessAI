@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="ChessAI" targetName="ChessAI" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="edd91ebc-b1bb-4fac-bc91-888de335f57c" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/ChessAI" />
+  </component>
+  <component name="ProjectId" id="1bHlW8Vn33oGsYHVcpiVH3VxhLk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Testing" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RunManager">
+    <configuration name="ChessAI" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ChessAI" TARGET_NAME="ChessAI" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ChessAI" RUN_TARGET_NAME="ChessAI">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="edd91ebc-b1bb-4fac-bc91-888de335f57c" name="Default Changelist" comment="" />
+      <created>1588296928824</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588296928824</updated>
+      <workItem from="1588296931230" duration="1174000" />
+      <workItem from="1588916164672" duration="4208000" />
+      <workItem from="1620851940026" duration="51898000" />
+      <workItem from="1622316873357" duration="14729000" />
+      <workItem from="1622341212226" duration="16000" />
+      <workItem from="1622341344061" duration="48000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/ChessAI" />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1174" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1620869536143">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="1174" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620869536143" />
+    <state x="1500" y="454" key="FileChooserDialogImpl" timestamp="1620855859950">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="1500" y="454" key="FileChooserDialogImpl/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620855859950" />
+    <state width="2517" height="539" key="GridCell.Tab.0.bottom" timestamp="1622341392231">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="539" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341392231" />
+    <state width="3397" height="549" key="GridCell.Tab.0.bottom/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
+    <state width="3397" height="401" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
+    <state width="3397" height="401" key="GridCell.Tab.0.bottom/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
+    <state width="2517" height="539" key="GridCell.Tab.0.center" timestamp="1622341392231">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="539" key="GridCell.Tab.0.center/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341392231" />
+    <state width="3397" height="549" key="GridCell.Tab.0.center/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
+    <state width="3397" height="401" key="GridCell.Tab.0.center/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
+    <state width="3397" height="401" key="GridCell.Tab.0.center/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
+    <state width="2517" height="539" key="GridCell.Tab.0.left" timestamp="1622341392231">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="539" key="GridCell.Tab.0.left/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341392231" />
+    <state width="3397" height="549" key="GridCell.Tab.0.left/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
+    <state width="3397" height="401" key="GridCell.Tab.0.left/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209582" />
+    <state width="3397" height="401" key="GridCell.Tab.0.left/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
+    <state width="2517" height="539" key="GridCell.Tab.0.right" timestamp="1622341392231">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="539" key="GridCell.Tab.0.right/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341392231" />
+    <state width="3397" height="549" key="GridCell.Tab.0.right/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
+    <state width="3397" height="401" key="GridCell.Tab.0.right/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
+    <state width="3397" height="401" key="GridCell.Tab.0.right/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
+    <state x="781" y="342" key="SettingsEditor" timestamp="1622341375623">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="781" y="342" key="SettingsEditor/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341375623" />
+    <state x="1057" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1622341344393">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1057" y="523" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341344393" />
+    <state x="1421" y="523" key="com.intellij.ide.util.TipDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620851940848" />
+    <state x="1461" y="343" key="refactoring.ChangeSignatureDialog" timestamp="1620872682949">
+      <screen x="0" y="0" width="3440" height="1400" />
+    </state>
+    <state x="1461" y="343" key="refactoring.ChangeSignatureDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620872682949" />
+    <state x="1029" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1622328479211">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1029" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622328479211" />
+    <state x="1383" y="315" width="672" height="678" key="search.everywhere.popup/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948222728" />
+    <state x="1383" y="315" width="672" height="678" key="search.everywhere.popup/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620858004908" />
+  </component>
+</project>
