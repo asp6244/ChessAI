@@ -6,7 +6,7 @@
 #define CHESS_GAMECONTROLLER_H
 
 #include "ChessBoard.h"
-#include "ChessPiece.h"
+#include "ChessPiece/ChessPiece.h"
 
 class GameController {
 protected:

@@ -151,32 +151,194 @@ comp\ChessBoard.cpp.s:
 	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessBoard.cpp.s
 .PHONY : comp\ChessBoard.cpp.s
 
-comp\ChessPiece.obj: comp\ChessPiece.cpp.obj
+comp\ChessPiece\Bishop.obj: comp\ChessPiece\Bishop.cpp.obj
 
-.PHONY : comp\ChessPiece.obj
+.PHONY : comp\ChessPiece\Bishop.obj
 
 # target to build an object file
-comp\ChessPiece.cpp.obj:
-	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece.cpp.obj
-.PHONY : comp\ChessPiece.cpp.obj
+comp\ChessPiece\Bishop.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Bishop.cpp.obj
+.PHONY : comp\ChessPiece\Bishop.cpp.obj
 
-comp\ChessPiece.i: comp\ChessPiece.cpp.i
+comp\ChessPiece\Bishop.i: comp\ChessPiece\Bishop.cpp.i
 
-.PHONY : comp\ChessPiece.i
+.PHONY : comp\ChessPiece\Bishop.i
 
 # target to preprocess a source file
-comp\ChessPiece.cpp.i:
-	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece.cpp.i
-.PHONY : comp\ChessPiece.cpp.i
+comp\ChessPiece\Bishop.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Bishop.cpp.i
+.PHONY : comp\ChessPiece\Bishop.cpp.i
 
-comp\ChessPiece.s: comp\ChessPiece.cpp.s
+comp\ChessPiece\Bishop.s: comp\ChessPiece\Bishop.cpp.s
 
-.PHONY : comp\ChessPiece.s
+.PHONY : comp\ChessPiece\Bishop.s
 
 # target to generate assembly for a file
-comp\ChessPiece.cpp.s:
-	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece.cpp.s
-.PHONY : comp\ChessPiece.cpp.s
+comp\ChessPiece\Bishop.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Bishop.cpp.s
+.PHONY : comp\ChessPiece\Bishop.cpp.s
+
+comp\ChessPiece\ChessPiece.obj: comp\ChessPiece\ChessPiece.cpp.obj
+
+.PHONY : comp\ChessPiece\ChessPiece.obj
+
+# target to build an object file
+comp\ChessPiece\ChessPiece.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\ChessPiece.cpp.obj
+.PHONY : comp\ChessPiece\ChessPiece.cpp.obj
+
+comp\ChessPiece\ChessPiece.i: comp\ChessPiece\ChessPiece.cpp.i
+
+.PHONY : comp\ChessPiece\ChessPiece.i
+
+# target to preprocess a source file
+comp\ChessPiece\ChessPiece.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\ChessPiece.cpp.i
+.PHONY : comp\ChessPiece\ChessPiece.cpp.i
+
+comp\ChessPiece\ChessPiece.s: comp\ChessPiece\ChessPiece.cpp.s
+
+.PHONY : comp\ChessPiece\ChessPiece.s
+
+# target to generate assembly for a file
+comp\ChessPiece\ChessPiece.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\ChessPiece.cpp.s
+.PHONY : comp\ChessPiece\ChessPiece.cpp.s
+
+comp\ChessPiece\King.obj: comp\ChessPiece\King.cpp.obj
+
+.PHONY : comp\ChessPiece\King.obj
+
+# target to build an object file
+comp\ChessPiece\King.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\King.cpp.obj
+.PHONY : comp\ChessPiece\King.cpp.obj
+
+comp\ChessPiece\King.i: comp\ChessPiece\King.cpp.i
+
+.PHONY : comp\ChessPiece\King.i
+
+# target to preprocess a source file
+comp\ChessPiece\King.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\King.cpp.i
+.PHONY : comp\ChessPiece\King.cpp.i
+
+comp\ChessPiece\King.s: comp\ChessPiece\King.cpp.s
+
+.PHONY : comp\ChessPiece\King.s
+
+# target to generate assembly for a file
+comp\ChessPiece\King.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\King.cpp.s
+.PHONY : comp\ChessPiece\King.cpp.s
+
+comp\ChessPiece\Knight.obj: comp\ChessPiece\Knight.cpp.obj
+
+.PHONY : comp\ChessPiece\Knight.obj
+
+# target to build an object file
+comp\ChessPiece\Knight.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Knight.cpp.obj
+.PHONY : comp\ChessPiece\Knight.cpp.obj
+
+comp\ChessPiece\Knight.i: comp\ChessPiece\Knight.cpp.i
+
+.PHONY : comp\ChessPiece\Knight.i
+
+# target to preprocess a source file
+comp\ChessPiece\Knight.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Knight.cpp.i
+.PHONY : comp\ChessPiece\Knight.cpp.i
+
+comp\ChessPiece\Knight.s: comp\ChessPiece\Knight.cpp.s
+
+.PHONY : comp\ChessPiece\Knight.s
+
+# target to generate assembly for a file
+comp\ChessPiece\Knight.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Knight.cpp.s
+.PHONY : comp\ChessPiece\Knight.cpp.s
+
+comp\ChessPiece\Pawn.obj: comp\ChessPiece\Pawn.cpp.obj
+
+.PHONY : comp\ChessPiece\Pawn.obj
+
+# target to build an object file
+comp\ChessPiece\Pawn.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Pawn.cpp.obj
+.PHONY : comp\ChessPiece\Pawn.cpp.obj
+
+comp\ChessPiece\Pawn.i: comp\ChessPiece\Pawn.cpp.i
+
+.PHONY : comp\ChessPiece\Pawn.i
+
+# target to preprocess a source file
+comp\ChessPiece\Pawn.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Pawn.cpp.i
+.PHONY : comp\ChessPiece\Pawn.cpp.i
+
+comp\ChessPiece\Pawn.s: comp\ChessPiece\Pawn.cpp.s
+
+.PHONY : comp\ChessPiece\Pawn.s
+
+# target to generate assembly for a file
+comp\ChessPiece\Pawn.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Pawn.cpp.s
+.PHONY : comp\ChessPiece\Pawn.cpp.s
+
+comp\ChessPiece\Queen.obj: comp\ChessPiece\Queen.cpp.obj
+
+.PHONY : comp\ChessPiece\Queen.obj
+
+# target to build an object file
+comp\ChessPiece\Queen.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Queen.cpp.obj
+.PHONY : comp\ChessPiece\Queen.cpp.obj
+
+comp\ChessPiece\Queen.i: comp\ChessPiece\Queen.cpp.i
+
+.PHONY : comp\ChessPiece\Queen.i
+
+# target to preprocess a source file
+comp\ChessPiece\Queen.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Queen.cpp.i
+.PHONY : comp\ChessPiece\Queen.cpp.i
+
+comp\ChessPiece\Queen.s: comp\ChessPiece\Queen.cpp.s
+
+.PHONY : comp\ChessPiece\Queen.s
+
+# target to generate assembly for a file
+comp\ChessPiece\Queen.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Queen.cpp.s
+.PHONY : comp\ChessPiece\Queen.cpp.s
+
+comp\ChessPiece\Rook.obj: comp\ChessPiece\Rook.cpp.obj
+
+.PHONY : comp\ChessPiece\Rook.obj
+
+# target to build an object file
+comp\ChessPiece\Rook.cpp.obj:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Rook.cpp.obj
+.PHONY : comp\ChessPiece\Rook.cpp.obj
+
+comp\ChessPiece\Rook.i: comp\ChessPiece\Rook.cpp.i
+
+.PHONY : comp\ChessPiece\Rook.i
+
+# target to preprocess a source file
+comp\ChessPiece\Rook.cpp.i:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Rook.cpp.i
+.PHONY : comp\ChessPiece\Rook.cpp.i
+
+comp\ChessPiece\Rook.s: comp\ChessPiece\Rook.cpp.s
+
+.PHONY : comp\ChessPiece\Rook.s
+
+# target to generate assembly for a file
+comp\ChessPiece\Rook.cpp.s:
+	$(MAKE) -f CMakeFiles\ChessAI.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\ChessAI.dir\comp\ChessPiece\Rook.cpp.s
+.PHONY : comp\ChessPiece\Rook.cpp.s
 
 comp\GameController.obj: comp\GameController.cpp.obj
 
@@ -244,9 +406,27 @@ help:
 	@echo ... comp/ChessBoard.obj
 	@echo ... comp/ChessBoard.i
 	@echo ... comp/ChessBoard.s
-	@echo ... comp/ChessPiece.obj
-	@echo ... comp/ChessPiece.i
-	@echo ... comp/ChessPiece.s
+	@echo ... comp/ChessPiece/Bishop.obj
+	@echo ... comp/ChessPiece/Bishop.i
+	@echo ... comp/ChessPiece/Bishop.s
+	@echo ... comp/ChessPiece/ChessPiece.obj
+	@echo ... comp/ChessPiece/ChessPiece.i
+	@echo ... comp/ChessPiece/ChessPiece.s
+	@echo ... comp/ChessPiece/King.obj
+	@echo ... comp/ChessPiece/King.i
+	@echo ... comp/ChessPiece/King.s
+	@echo ... comp/ChessPiece/Knight.obj
+	@echo ... comp/ChessPiece/Knight.i
+	@echo ... comp/ChessPiece/Knight.s
+	@echo ... comp/ChessPiece/Pawn.obj
+	@echo ... comp/ChessPiece/Pawn.i
+	@echo ... comp/ChessPiece/Pawn.s
+	@echo ... comp/ChessPiece/Queen.obj
+	@echo ... comp/ChessPiece/Queen.i
+	@echo ... comp/ChessPiece/Queen.s
+	@echo ... comp/ChessPiece/Rook.obj
+	@echo ... comp/ChessPiece/Rook.i
+	@echo ... comp/ChessPiece/Rook.s
 	@echo ... comp/GameController.obj
 	@echo ... comp/GameController.i
 	@echo ... comp/GameController.s

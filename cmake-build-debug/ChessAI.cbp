@@ -88,10 +88,46 @@
 		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessBoard.h">
 			<Option target="ChessAI"/>
 		</Unit>
-		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece.cpp">
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Bishop.cpp">
 			<Option target="ChessAI"/>
 		</Unit>
-		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece.h">
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Bishop.h">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/ChessPiece.cpp">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/ChessPiece.h">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/King.cpp">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/King.h">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Knight.cpp">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Knight.h">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Pawn.cpp">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Pawn.h">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Queen.cpp">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Queen.h">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Rook.cpp">
+			<Option target="ChessAI"/>
+		</Unit>
+		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/ChessPiece/Rook.h">
 			<Option target="ChessAI"/>
 		</Unit>
 		<Unit filename="C:/Users/alecs/OneDrive/Docs/C++/ChessAI/comp/GameController.cpp">

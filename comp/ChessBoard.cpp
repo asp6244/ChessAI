@@ -7,7 +7,6 @@
 #include <iostream>
 #include <string>
 #include "ChessBoard.h"
-#include "ChessPiece.h"
 
 ChessBoard::ChessBoard() {
     // make white pieces
