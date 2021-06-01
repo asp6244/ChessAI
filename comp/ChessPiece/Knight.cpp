@@ -7,9 +7,9 @@
 #include "Knight.h"
 #include "ChessPiece.h"
 
-Knight::Knight(Color team, bool knightAtB) {
+Knight::Knight(Color team, bool kingside) {
     this->team = team;
-    this->col = knightAtB ? 1 : 6;
+    this->col = kingside ? 6 : 1;
     this->row = (team == WHITE) ? 0 : 7;
 }
 
@@ -35,4 +35,12 @@ bool Knight::move(int r, int c) {
     col = c;
 
     return true;
+}
+
+int Knight::getRow() {
+    return row;
+}
+
+int Knight::getCol() {
+    return col;
 }

@@ -17,6 +17,8 @@ protected:
 public:
     King(Color team);
     bool move(int r, int c, ChessBoard* board);
+    int getRow();
+    int getCol();
 };
 
 

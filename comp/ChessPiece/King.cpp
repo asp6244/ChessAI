@@ -37,6 +37,14 @@ bool King::move(int r, int c, ChessBoard* board) {
         }
 
         bool kingside = (colDisplacement == 2);
+
+        // check for taking a piece or jumping over a piece
+        if( (board->getPiece(r, c) != nullptr) || ((kingside && board->getPiece(row, col+1) != nullptr) ||
+          (!kingside && board->getPiece(row, col-1) != nullptr)) ) {
+            printf("  Invalid move, castle cannot contain any pieces between the King and Rook.\n");
+            return false;
+        }
+
         if(!board->castle(team, kingside)) {
             return false;
         }
@@ -49,4 +57,12 @@ bool King::move(int r, int c, ChessBoard* board) {
     col = c;
 
     return true;
+}
+
+int King::getRow() {
+    return row;
+}
+
+int King::getCol() {
+    return col;
 }

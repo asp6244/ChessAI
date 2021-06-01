@@ -54,3 +54,11 @@ bool Pawn::move(int r, int c, ChessBoard* board) {
 
     return true;
 }
+
+int Pawn::getRow() {
+    return row;
+}
+
+int Pawn::getCol() {
+    return col;
+}

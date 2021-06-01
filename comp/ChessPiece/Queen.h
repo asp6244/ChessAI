@@ -17,6 +17,8 @@ public:
     Queen(Color team);
     Queen(Color team, int row, int col); // Pawn gets promoted
     bool move(int r, int c, ChessBoard* board);
+    int getRow();
+    int getCol();
 };
 
 

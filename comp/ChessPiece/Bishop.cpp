@@ -8,9 +8,9 @@
 #include "ChessPiece.h"
 #include "../ChessBoard.h"
 
-Bishop::Bishop(Color team, bool bishopAtC) {
+Bishop::Bishop(Color team, bool kingside) {
     this->team = team;
-    this->col = bishopAtC ? 2 : 5;
+    this->col = kingside ? 5 : 2;
     this->row = (team == WHITE) ? 0 : 7;
 }
 
@@ -49,4 +49,12 @@ bool Bishop::move(int r, int c, ChessBoard* board) {
     col = c;
 
     return true;
+}
+
+int Bishop::getRow() {
+    return row;
+}
+
+int Bishop::getCol() {
+    return col;
 }

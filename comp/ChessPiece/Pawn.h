@@ -17,6 +17,8 @@ protected:
 public:
     Pawn(Color team, int col);
     bool move(int r, int c, ChessBoard* board);
+    int getRow();
+    int getCol();
 };
 
 

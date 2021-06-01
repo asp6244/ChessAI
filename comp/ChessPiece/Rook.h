@@ -15,10 +15,12 @@ protected:
     int col;
     bool hasNotMoved = true;
 public:
-    Rook(Color team, bool rookAtA);
+    Rook(Color team, bool kingside);
     Rook(Color team, int row, int col); // Pawn gets promoted
     bool move(int r, int c, ChessBoard* board);
     bool getHasNotMoved();
+    int getRow();
+    int getCol();
 };
 
 

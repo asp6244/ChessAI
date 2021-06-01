@@ -72,3 +72,11 @@ bool Queen::move(int r, int c, ChessBoard* board) {
 
     return true;
 }
+
+int Queen::getRow() {
+    return row;
+}
+
+int Queen::getCol() {
+    return col;
+}

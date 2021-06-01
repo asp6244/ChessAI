@@ -13,9 +13,11 @@ protected:
     int row;
     int col;
 public:
-    Knight(Color team, bool knightAtB);
+    Knight(Color team, bool kingside);
     Knight(Color team, int row, int col); // Pawn gets promoted
     bool move(int r, int c);
+    int getRow();
+    int getCol();
 };
 
 

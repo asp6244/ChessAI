@@ -7,7 +7,6 @@
 #include "GameController.h"
 
 GameController::GameController() {
-    board = ChessBoard();
     whoseTurn = WHITE;
 
     while(!board.getCheckMate()) {

@@ -7,9 +7,9 @@
 #include "ChessPiece.h"
 #include "../ChessBoard.h"
 
-Rook::Rook(Color team, bool rookAtA) {
+Rook::Rook(Color team, bool kingside) {
     this->team = team;
-    this->col = rookAtA ? 0 : 7;
+    this->col = kingside ? 7 : 0;
     this->row = (team == WHITE) ? 0 : 7;
 }
 Rook::Rook(Color team, int row, int col) { // pawn gets promoted
@@ -63,4 +63,12 @@ bool Rook::move(int r, int c, ChessBoard* board) {
 
 bool Rook::getHasNotMoved() {
     return hasNotMoved;
+}
+
+int Rook::getRow() {
+    return row;
+}
+
+int Rook::getCol() {
+    return col;
 }
