@@ -14,7 +14,7 @@ Pawn::Pawn(Color team, int col) {
     this->row = (team == WHITE) ? 1 : 6;
 }
 
-bool Pawn::move(int r, int c, ChessBoard* board) {
+bool Pawn::validateMove(int r, int c, ChessBoard* board) {
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
 
@@ -46,13 +46,29 @@ bool Pawn::move(int r, int c, ChessBoard* board) {
         }
     }
 
-    hasNotMoved = false;
-
-    // make move
-    row = r;
-    col = c;
+    // propose move
+    proposedRow = r;
+    proposedCol = c;
 
     return true;
+}
+
+void Pawn::makeMove() {
+    // check for valid move
+    if(proposedRow < 0 || proposedCol < 0) {
+        printf("Error: makeMove() attempted to make an invalid move.\n");
+        exit(99);
+    }
+
+    // mave move
+    row = proposedRow;
+    col = proposedCol;
+
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
+
+    hasNotMoved = false;
 }
 
 int Pawn::getRow() {
@@ -61,4 +77,10 @@ int Pawn::getRow() {
 
 int Pawn::getCol() {
     return col;
+}
+
+void Pawn::resetValidation() {
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }

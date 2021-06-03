@@ -27,19 +27,18 @@ enum Color {
 };
 
 union TypePointer {
-    int null;
-    King king;
-    Queen queen;
-    Bishop bishop;
-    Knight knight;
-    Rook rook;
-    Pawn pawn;
+    King* king;
+    Queen* queen;
+    Bishop* bishop;
+    Knight* knight;
+    Rook* rook;
+    Pawn* pawn;
 };
 
 class ChessPiece {
 protected:
     PieceType type;
-    TypePointer pointer{};
+    TypePointer pointer;
     Color team;
     int id; // white is positive; black is negative
 public:
@@ -50,9 +49,11 @@ public:
     PieceType getType();
     Color getTeam();
     TypePointer getPointer();
-    bool move(int r, int c, ChessBoard* board);
+    bool validateMove(int r, int c, ChessBoard* board);
+    void makeMove();
     int getRow();
     int getCol();
+    void resetValidation();
     int getID();
     void print();
 };

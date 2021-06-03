@@ -14,11 +14,15 @@ protected:
     int row;
     int col;
     bool hasNotMoved = true;
+    int proposedRow = -1;
+    int proposedCol = -1;
 public:
     Pawn(Color team, int col);
-    bool move(int r, int c, ChessBoard* board);
+    bool validateMove(int r, int c, ChessBoard* board);
+    void makeMove();
     int getRow();
     int getCol();
+    void resetValidation();
 };
 
 

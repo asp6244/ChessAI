@@ -14,7 +14,7 @@ King::King(Color team) {
     this->row = (team == WHITE) ? 0 : 7;
 }
 
-bool King::move(int r, int c, ChessBoard* board) {
+bool King::validateMove(int r, int c, ChessBoard *board) {
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
     // check if movement is valid
@@ -45,18 +45,47 @@ bool King::move(int r, int c, ChessBoard* board) {
             return false;
         }
 
+        // attempt to castle
         if(!board->castle(team, kingside)) {
             return false;
         }
+
+        // set the
+        int rookCol = (kingside) ? 7 : 0;
+        castledRook = board->getPiece(row, rookCol)->getPointer().rook;
+    } else {
+        castledRook = nullptr;
     }
+
+    // make move
+    proposedRow = r;
+    proposedCol = c;
+
+    return true;
+}
+
+void King::makeMove() {
+    // check for valid move
+    if(proposedRow < 0 || proposedCol < 0) {
+        printf("Error: makeMove() attempted to make an invalid move.\n");
+        exit(99);
+    }
+
+    // mave move
+    row = proposedRow;
+    col = proposedCol;
+
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 
     hasNotMoved = false;
 
-    // make move
-    row = r;
-    col = c;
+    // execute castle
+    castledRook->makeMove();
 
-    return true;
+    // reset castle
+    castledRook = nullptr;
 }
 
 int King::getRow() {
@@ -65,4 +94,13 @@ int King::getRow() {
 
 int King::getCol() {
     return col;
+}
+
+void King::resetValidation() {
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
+
+    // reset castle
+    castledRook = nullptr;
 }

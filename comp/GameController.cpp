@@ -9,7 +9,7 @@
 GameController::GameController() {
     whoseTurn = WHITE;
 
-    while(!board.getCheckMate()) {
+    while(!board.getWhiteCheckMate() && !board.getBlackCheckMate()) {
         board.printBoard();
 
         const char* whoseTurnString = (whoseTurn == WHITE) ? "White" : "Black";
@@ -25,6 +25,8 @@ GameController::GameController() {
             printf(">>");
             // get input
             std::getline(std::cin, input);
+
+            // TODO: resign
 
             std::string compoundLocation; // contains both the current location and the new location
             int validChars = 0; // counts the number of non-space characters were read

@@ -20,7 +20,7 @@ Bishop::Bishop(Color team, int row, int col) { // pawn gets promoted
     this->col = col;
 }
 
-bool Bishop::move(int r, int c, ChessBoard* board) {
+bool Bishop::validateMove(int r, int c, ChessBoard* board) {
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
     // check if movement is valid
@@ -44,11 +44,27 @@ bool Bishop::move(int r, int c, ChessBoard* board) {
         j+=colInc; // increment row and column
     }
 
-    // make move
-    row = r;
-    col = c;
+    // propose move
+    proposedRow = r;
+    proposedCol = c;
 
     return true;
+}
+
+void Bishop::makeMove() {
+    // check for valid move
+    if (proposedRow < 0 || proposedCol < 0) {
+        printf("Error: makeMove() attempted to make an invalid move.\n");
+        exit(99);
+    }
+
+    // mave move
+    row = proposedRow;
+    col = proposedCol;
+
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }
 
 int Bishop::getRow() {
@@ -57,4 +73,10 @@ int Bishop::getRow() {
 
 int Bishop::getCol() {
     return col;
+}
+
+void Bishop::resetValidation() {
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }

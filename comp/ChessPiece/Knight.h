@@ -12,12 +12,16 @@ protected:
     Color team;
     int row;
     int col;
+    int proposedRow = -1;
+    int proposedCol = -1;
 public:
     Knight(Color team, bool kingside);
     Knight(Color team, int row, int col); // Pawn gets promoted
-    bool move(int r, int c);
+    bool validateMove(int r, int c);
+    void makeMove();
     int getRow();
     int getCol();
+    void resetValidation();
 };
 
 

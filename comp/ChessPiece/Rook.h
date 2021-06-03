@@ -14,13 +14,17 @@ protected:
     int row;
     int col;
     bool hasNotMoved = true;
+    int proposedRow = -1;
+    int proposedCol = -1;
 public:
     Rook(Color team, bool kingside);
     Rook(Color team, int row, int col); // Pawn gets promoted
-    bool move(int r, int c, ChessBoard* board);
+    bool validateMove(int r, int c, ChessBoard* board);
+    void makeMove();
     bool getHasNotMoved();
     int getRow();
     int getCol();
+    void resetValidation();
 };
 
 

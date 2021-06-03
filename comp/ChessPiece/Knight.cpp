@@ -19,7 +19,7 @@ Knight::Knight(Color team, int row, int col) { // pawn gets promoted
     this->col = col;
 }
 
-bool Knight::move(int r, int c) {
+bool Knight::validateMove(int r, int c) {
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
     // check if movement is valid
@@ -30,11 +30,27 @@ bool Knight::move(int r, int c) {
         return false;
     }
 
-    // make move
-    row = r;
-    col = c;
+    // propose move
+    proposedRow = r;
+    proposedCol = c;
 
     return true;
+}
+
+void Knight::makeMove() {
+    // check for valid move
+    if(proposedRow < 0 || proposedCol < 0) {
+        printf("Error: makeMove() attempted to make an invalid move.\n");
+        exit(99);
+    }
+
+    // mave move
+    row = proposedRow;
+    col = proposedCol;
+
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }
 
 int Knight::getRow() {
@@ -43,4 +59,10 @@ int Knight::getRow() {
 
 int Knight::getCol() {
     return col;
+}
+
+void Knight::resetValidation() {
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }

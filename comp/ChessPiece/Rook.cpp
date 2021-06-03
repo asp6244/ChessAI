@@ -3,6 +3,7 @@
 //
 
 #include <cstdio>
+#include <cstdlib>
 #include "Rook.h"
 #include "ChessPiece.h"
 #include "../ChessBoard.h"
@@ -18,7 +19,7 @@ Rook::Rook(Color team, int row, int col) { // pawn gets promoted
     this->col = col;
 }
 
-bool Rook::move(int r, int c, ChessBoard* board) {
+bool Rook::validateMove(int r, int c, ChessBoard* board) {
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
 
@@ -52,13 +53,29 @@ bool Rook::move(int r, int c, ChessBoard* board) {
         }
     }
 
-    hasNotMoved = false;
-
-    // make move
-    row = r;
-    col = c;
+    // propose move
+    proposedRow = r;
+    proposedCol = c;
 
     return true;
+}
+
+void Rook::makeMove() {
+    // check for valid move
+    if (proposedRow < 0 || proposedCol < 0) {
+        printf("Error: makeMove() attempted to make an invalid move.\n");
+        exit(99);
+    }
+
+    // mave move
+    row = proposedRow;
+    col = proposedCol;
+
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
+
+    hasNotMoved = false;
 }
 
 bool Rook::getHasNotMoved() {
@@ -71,4 +88,10 @@ int Rook::getRow() {
 
 int Rook::getCol() {
     return col;
+}
+
+void Rook::resetValidation() {
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }

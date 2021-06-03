@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated>
-      <config projectName="ChessAI" targetName="ChessAI" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -12,40 +10,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edd91ebc-b1bb-4fac-bc91-888de335f57c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Bishop.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Bishop.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/King.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/King.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Knight.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Knight.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Pawn.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Pawn.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Queen.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Queen.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Rook.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comp/ChessPiece/Rook.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/objects1.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessBoard.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessBoard.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Bishop.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Bishop.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/ChessPiece.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/ChessPiece.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/King.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/King.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Knight.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Knight.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Pawn.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Pawn.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Queen.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Queen.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Rook.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Rook.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/GameController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/GameController.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/vc140.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/vc140.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.ilk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.ilk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessBoard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessBoard.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessBoard.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessBoard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/GameController.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/GameController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Bishop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Bishop.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Bishop.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Bishop.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/King.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/King.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/King.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/King.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Knight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Knight.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Knight.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Knight.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Pawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Pawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Pawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Pawn.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Queen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Queen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Queen.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Queen.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Rook.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Rook.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Rook.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Rook.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comp/GameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/GameController.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,14 +68,15 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Testing" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -85,7 +84,12 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="ChessAI" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ChessAI" TARGET_NAME="ChessAI" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ChessAI" RUN_TARGET_NAME="ChessAI">
+    <configuration name="ChessAI" type="CMakeRunConfiguration" factoryName="Application" nameIsGenerated="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ChessAI" TARGET_NAME="ChessAI" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ChessAI" RUN_TARGET_NAME="ChessAI">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ChessAI" TARGET_NAME="ChessAI" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ChessAI" RUN_TARGET_NAME="ChessAI">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -107,7 +111,13 @@
       <workItem from="1622316873357" duration="14729000" />
       <workItem from="1622341212226" duration="16000" />
       <workItem from="1622341344061" duration="48000" />
-      <workItem from="1622341727324" duration="2087000" />
+      <workItem from="1622341727324" duration="3467000" />
+      <workItem from="1622414140922" duration="3294000" />
+      <workItem from="1622419659738" duration="290000" />
+      <workItem from="1622419999412" duration="28562000" />
+      <workItem from="1622604762219" duration="61000" />
+      <workItem from="1622671271830" duration="3094000" />
+      <workItem from="1622690005845" duration="8214000" />
     </task>
     <servers />
   </component>
@@ -120,60 +130,64 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="1174" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1620869536143">
-      <screen x="0" y="0" width="3440" height="1400" />
+    <state x="874" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1622420293425">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
+    <state x="874" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622420293425" />
     <state x="1174" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620869536143" />
     <state x="1500" y="454" key="FileChooserDialogImpl" timestamp="1620855859950">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
     <state x="1500" y="454" key="FileChooserDialogImpl/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620855859950" />
-    <state width="2517" height="539" key="GridCell.Tab.0.bottom" timestamp="1622343869553">
+    <state width="2517" height="553" key="GridCell.Tab.0.bottom" timestamp="1622698397520">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="539" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622343869553" />
+    <state width="2517" height="553" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
     <state width="3397" height="549" key="GridCell.Tab.0.bottom/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
     <state width="3397" height="401" key="GridCell.Tab.0.bottom/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state width="2517" height="539" key="GridCell.Tab.0.center" timestamp="1622343869552">
+    <state width="2517" height="553" key="GridCell.Tab.0.center" timestamp="1622698397520">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="539" key="GridCell.Tab.0.center/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622343869552" />
+    <state width="2517" height="553" key="GridCell.Tab.0.center/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
     <state width="3397" height="549" key="GridCell.Tab.0.center/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.center/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
     <state width="3397" height="401" key="GridCell.Tab.0.center/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state width="2517" height="539" key="GridCell.Tab.0.left" timestamp="1622343869552">
+    <state width="2517" height="553" key="GridCell.Tab.0.left" timestamp="1622698397520">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="539" key="GridCell.Tab.0.left/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622343869552" />
+    <state width="2517" height="553" key="GridCell.Tab.0.left/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
     <state width="3397" height="549" key="GridCell.Tab.0.left/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.left/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209582" />
     <state width="3397" height="401" key="GridCell.Tab.0.left/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state width="2517" height="539" key="GridCell.Tab.0.right" timestamp="1622343869553">
+    <state width="2517" height="553" key="GridCell.Tab.0.right" timestamp="1622698397520">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="539" key="GridCell.Tab.0.right/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622343869553" />
+    <state width="2517" height="553" key="GridCell.Tab.0.right/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
     <state width="3397" height="549" key="GridCell.Tab.0.right/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.right/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
     <state width="3397" height="401" key="GridCell.Tab.0.right/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state x="781" y="342" key="SettingsEditor" timestamp="1622341375623">
-      <screen x="0" y="0" width="2560" height="1400" />
+    <state x="446" y="69" key="SettingsEditor" timestamp="1622414748817">
+      <screen x="0" y="0" width="1463" height="783" />
     </state>
+    <state x="446" y="69" key="SettingsEditor/0.0.1463.783@0.0.1463.783" timestamp="1622414748817" />
     <state x="781" y="342" key="SettingsEditor/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341375623" />
-    <state x="1057" y="523" key="com.intellij.ide.util.TipDialog" timestamp="1622341737200">
+    <state x="1057" y="523" width="650" height="485" key="com.intellij.ide.util.TipDialog" timestamp="1622690292671">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1057" y="523" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341737200" />
+    <state x="604" y="293" key="com.intellij.ide.util.TipDialog/0.0.1463.783@0.0.1463.783" timestamp="1622414144951" />
+    <state x="1057" y="523" width="650" height="485" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622690292671" />
     <state x="1421" y="523" key="com.intellij.ide.util.TipDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620851940848" />
     <state x="1087" y="343" key="refactoring.ChangeSignatureDialog" timestamp="1622342521021">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1087" y="343" key="refactoring.ChangeSignatureDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622342521021" />
     <state x="1461" y="343" key="refactoring.ChangeSignatureDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620872682949" />
-    <state x="1029" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1622328479211">
+    <state x="1029" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1622680209338">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1029" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622328479211" />
+    <state x="588" y="176" width="672" height="380" key="search.everywhere.popup/0.0.1463.783@0.0.1463.783" timestamp="1622414617587" />
+    <state x="1029" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622680209338" />
     <state x="1383" y="315" width="672" height="678" key="search.everywhere.popup/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948222728" />
     <state x="1383" y="315" width="672" height="678" key="search.everywhere.popup/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620858004908" />
   </component>

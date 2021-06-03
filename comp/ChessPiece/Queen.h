@@ -13,12 +13,16 @@ protected:
     Color team;
     int row;
     int col;
+    int proposedRow = -1;
+    int proposedCol = -1;
 public:
     Queen(Color team);
     Queen(Color team, int row, int col); // Pawn gets promoted
-    bool move(int r, int c, ChessBoard* board);
+    bool validateMove(int r, int c, ChessBoard* board);
+    void makeMove();
     int getRow();
     int getCol();
+    void resetValidation();
 };
 
 

@@ -20,7 +20,7 @@ Queen::Queen(Color team, int row, int col) { // pawn gets promoted
     this->col = col;
 }
 
-bool Queen::move(int r, int c, ChessBoard* board) {
+bool Queen::validateMove(int r, int c, ChessBoard* board) {
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
     // check if movement is valid
@@ -66,11 +66,27 @@ bool Queen::move(int r, int c, ChessBoard* board) {
         }
     }
 
-    // make move
-    row = r;
-    col = c;
+    // propose move
+    proposedRow = r;
+    proposedCol = c;
 
     return true;
+}
+
+void Queen::makeMove() {
+    // check for valid move
+    if(proposedRow < 0 || proposedCol < 0) {
+        printf("Error: makeMove() attempted to make an invalid move.\n");
+        exit(99);
+    }
+
+    // mave move
+    row = proposedRow;
+    col = proposedCol;
+
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }
 
 int Queen::getRow() {
@@ -79,4 +95,10 @@ int Queen::getRow() {
 
 int Queen::getCol() {
     return col;
+}
+
+void Queen::resetValidation() {
+    // reset proposed move
+    proposedRow = -1;
+    proposedCol = -1;
 }
