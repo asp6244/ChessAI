@@ -25,6 +25,7 @@ private:
     int capturedWhitePiecesSize = 0;
     ChessPiece* capturedBlackPieces[16] = {nullptr};
     int capturedBlackPiecesSize = 0;
+    bool castling = false;
     bool whiteCheck = false;
     bool whiteCheckMate = false;
     bool blackCheck = false;
@@ -37,12 +38,12 @@ public:
     bool movePiece(int row, int col, int newRow, int newCol);
     bool castle(Color team, bool kingside); // moves Rook to correct position for a castle
     ChessPiece* getPiece(int row, int col);
-    void destroyBoard();
     bool getWhiteCheck();
     bool getWhiteCheckMate();
     bool getBlackCheck();
     bool getBlackCheckMate();
     void printHotSquares(bool printValues);
+    void destroyBoard();
 private:
     void promotion(int row, int col);
     void setAllHotSquares(int row, int col, bool value, bool reevaluating); // find all hot squares from a single piece

@@ -79,6 +79,10 @@ GameController::GameController() {
             }
         } while(!valid);
 
+        if(board.getWhiteCheck() || board.getBlackCheck()) {
+            printf("Check!\n");
+        }
+
         whoseTurn = (whoseTurn == WHITE) ? BLACK : WHITE;
     }
 

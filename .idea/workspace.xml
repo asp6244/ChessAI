@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated />
+    <generated>
+      <config projectName="ChessAI" targetName="ChessAI" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -10,7 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="edd91ebc-b1bb-4fac-bc91-888de335f57c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdCXX/CMakeCXXCompilerId.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessBoard.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessBoard.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Bishop.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/ChessPiece/Bishop.cpp.obj" afterDir="false" />
@@ -23,26 +33,16 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/GameController.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/comp/GameController.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/vc140.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ChessAI.dir/vc140.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.ilk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/ChessAI.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ChessAI.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessBoard.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessBoard.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessBoard.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessBoard.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Bishop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Bishop.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Bishop.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Bishop.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/ChessPiece.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/ChessPiece/King.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/King.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/King.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/King.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Knight.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Knight.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Knight.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Knight.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Pawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Pawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Pawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Pawn.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Queen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Queen.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Queen.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Queen.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Rook.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Rook.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comp/ChessPiece/Rook.h" beforeDir="false" afterPath="$PROJECT_DIR$/comp/ChessPiece/Rook.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comp/GameController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/comp/GameController.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,6 +118,9 @@
       <workItem from="1622604762219" duration="61000" />
       <workItem from="1622671271830" duration="3094000" />
       <workItem from="1622690005845" duration="8214000" />
+      <workItem from="1622765404758" duration="13299000" />
+      <workItem from="1622779439014" duration="889000" />
+      <workItem from="1622780480117" duration="39000" />
     </task>
     <servers />
   </component>
@@ -130,40 +133,40 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="874" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1622420293425">
+    <state x="874" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1622779802437">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="874" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622420293425" />
+    <state x="874" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622779802437" />
     <state x="1174" y="354" key="#com.intellij.execution.impl.EditConfigurationsDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620869536143" />
     <state x="1500" y="454" key="FileChooserDialogImpl" timestamp="1620855859950">
       <screen x="0" y="0" width="3440" height="1400" />
     </state>
     <state x="1500" y="454" key="FileChooserDialogImpl/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620855859950" />
-    <state width="2517" height="553" key="GridCell.Tab.0.bottom" timestamp="1622698397520">
+    <state width="872" height="1005" key="GridCell.Tab.0.bottom" timestamp="1622780335489">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="553" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
+    <state width="872" height="1005" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622780335489" />
     <state width="3397" height="549" key="GridCell.Tab.0.bottom/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.bottom/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
     <state width="3397" height="401" key="GridCell.Tab.0.bottom/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state width="2517" height="553" key="GridCell.Tab.0.center" timestamp="1622698397520">
+    <state width="872" height="1005" key="GridCell.Tab.0.center" timestamp="1622780335489">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="553" key="GridCell.Tab.0.center/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
+    <state width="872" height="1005" key="GridCell.Tab.0.center/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622780335489" />
     <state width="3397" height="549" key="GridCell.Tab.0.center/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.center/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
     <state width="3397" height="401" key="GridCell.Tab.0.center/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state width="2517" height="553" key="GridCell.Tab.0.left" timestamp="1622698397520">
+    <state width="872" height="1005" key="GridCell.Tab.0.left" timestamp="1622780335489">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="553" key="GridCell.Tab.0.left/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
+    <state width="872" height="1005" key="GridCell.Tab.0.left/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622780335489" />
     <state width="3397" height="549" key="GridCell.Tab.0.left/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.left/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209582" />
     <state width="3397" height="401" key="GridCell.Tab.0.left/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
-    <state width="2517" height="553" key="GridCell.Tab.0.right" timestamp="1622698397520">
+    <state width="872" height="1005" key="GridCell.Tab.0.right" timestamp="1622780335489">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="553" key="GridCell.Tab.0.right/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622698397520" />
+    <state width="872" height="1005" key="GridCell.Tab.0.right/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622780335489" />
     <state width="3397" height="549" key="GridCell.Tab.0.right/0.0.3440.1400/1084.-768.1366.728@0.0.3440.1400" timestamp="1620948618037" />
     <state width="3397" height="401" key="GridCell.Tab.0.right/0.0.3440.1400/3440.350.1920.1040/1084.-768.1366.728@0.0.3440.1400" timestamp="1620876209583" />
     <state width="3397" height="401" key="GridCell.Tab.0.right/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620874247771" />
@@ -172,11 +175,11 @@
     </state>
     <state x="446" y="69" key="SettingsEditor/0.0.1463.783@0.0.1463.783" timestamp="1622414748817" />
     <state x="781" y="342" key="SettingsEditor/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622341375623" />
-    <state x="1057" y="523" width="650" height="485" key="com.intellij.ide.util.TipDialog" timestamp="1622690292671">
+    <state x="1057" y="523" width="650" height="485" key="com.intellij.ide.util.TipDialog" timestamp="1622780479906">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="604" y="293" key="com.intellij.ide.util.TipDialog/0.0.1463.783@0.0.1463.783" timestamp="1622414144951" />
-    <state x="1057" y="523" width="650" height="485" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622690292671" />
+    <state x="1057" y="523" width="650" height="485" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.349.1920.1040@0.0.2560.1400" timestamp="1622780479906" />
     <state x="1421" y="523" key="com.intellij.ide.util.TipDialog/1084.-768.1366.728/0.0.3440.1400/3440.350.1920.1040@0.0.3440.1400" timestamp="1620851940848" />
     <state x="1087" y="343" key="refactoring.ChangeSignatureDialog" timestamp="1622342521021">
       <screen x="0" y="0" width="2560" height="1400" />

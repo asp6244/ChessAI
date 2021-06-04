@@ -26,13 +26,16 @@ bool King::validateMove(int r, int c, ChessBoard *board) {
         return false;
     }
 
-    // TODO: check if movement enters check
-
     // check for castle
     if(((team == WHITE && row == 0) || (team == BLACK && row == 7)) && (col == 4 || col == 3) &&
        (abs(colDisplacement) == 2 && rowDisplacement == 0)) {
         if(!hasNotMoved) {
             printf("  Invalid move, castle condition not met; King cannot have moved in order to castle.\n");
+            return false;
+        }
+
+        if( (board->getWhiteCheck() && team == WHITE) || (board->getBlackCheck() && team == BLACK) ) {
+            printf("  Invalid move, castle condition not met; King cannot be in check to castle.\n");
             return false;
         }
 
@@ -50,14 +53,14 @@ bool King::validateMove(int r, int c, ChessBoard *board) {
             return false;
         }
 
-        // set the
+        // save the rook that is being castled
         int rookCol = (kingside) ? 7 : 0;
         castledRook = board->getPiece(row, rookCol)->getPointer().rook;
     } else {
         castledRook = nullptr;
     }
 
-    // make move
+    // propose move
     proposedRow = r;
     proposedCol = c;
 

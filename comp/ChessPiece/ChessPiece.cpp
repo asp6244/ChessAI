@@ -120,16 +120,22 @@ void ChessPiece::makeMove() {
     switch(type) {
         case KING:
             (pointer.king)->makeMove();
+            break;
         case QUEEN:
             (pointer.queen)->makeMove();
+            break;
         case BISHOP:
             (pointer.bishop)->makeMove();
+            break;
         case KNIGHT:
             (pointer.knight)->makeMove();
+            break;
         case ROOK:
             (pointer.rook)->makeMove();
+            break;
         case PAWN:
             (pointer.pawn)->makeMove();
+            break;
         default:
             fprintf(stderr, "Error: piece has no type [makeMove()].\n");
             exit(99);
@@ -180,16 +186,22 @@ void ChessPiece::resetValidation() {
     switch(type) {
         case KING:
             (pointer.king)->resetValidation();
+            break;
         case QUEEN:
             (pointer.queen)->resetValidation();
+            break;
         case BISHOP:
             (pointer.bishop)->resetValidation();
+            break;
         case KNIGHT:
             (pointer.knight)->resetValidation();
+            break;
         case ROOK:
             (pointer.rook)->resetValidation();
+            break;
         case PAWN:
             (pointer.pawn)->resetValidation();
+            break;
         default:
             fprintf(stderr, "Error: piece has no type [resetValidation()].\n");
             exit(99);
@@ -223,6 +235,32 @@ void ChessPiece::print() {
             break;
         default:
             fprintf(stderr, "Error: piece has no type [print()].\n");
+            exit(99);
+    }
+}
+
+void ChessPiece::deletePiece(){
+    switch(type) {
+        case KING:
+            delete pointer.king;
+            break;
+        case QUEEN:
+            delete pointer.queen;
+            break;
+        case BISHOP:
+            delete pointer.bishop;
+            break;
+        case KNIGHT:
+            delete pointer.knight;
+            break;
+        case ROOK:
+            delete pointer.rook;
+            break;
+        case PAWN:
+            delete pointer.pawn;
+            break;
+        default:
+            fprintf(stderr, "Error: piece has no type [delete()].\n");
             exit(99);
     }
 }

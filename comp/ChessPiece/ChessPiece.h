@@ -56,6 +56,7 @@ public:
     void resetValidation();
     int getID();
     void print();
+    void deletePiece();
 };
 
 #endif //CHESS_CHESSPIECE_H
