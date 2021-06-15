@@ -208,6 +208,14 @@ void ChessPiece::resetValidation() {
     }
 }
 
+void ChessPiece::pieceCaptured() {
+    isCaptured = true;
+}
+
+bool ChessPiece::getIsCaptured() {
+    return isCaptured;
+}
+
 int ChessPiece::getID() {
     return id;
 }

@@ -41,6 +41,7 @@ protected:
     TypePointer pointer;
     Color team;
     int id; // white is positive; black is negative
+    bool isCaptured = false;
 public:
     ChessPiece(PieceType type, Color team, int id); // King, Queen
     ChessPiece(PieceType type, Color team, bool kingside, int id); // Rook, Knight, Bishop
@@ -54,6 +55,8 @@ public:
     int getRow();
     int getCol();
     void resetValidation();
+    void pieceCaptured();
+    bool getIsCaptured();
     int getID();
     void print();
     void deletePiece();

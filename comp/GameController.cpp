@@ -9,7 +9,7 @@
 GameController::GameController() {
     whoseTurn = WHITE;
 
-    while(!board.getWhiteCheckMate() && !board.getBlackCheckMate()) {
+    while(!board.getWhiteCheckmate() && !board.getBlackCheckmate() && !board.getStalemate()) {
         board.printBoard();
 
         const char* whoseTurnString = (whoseTurn == WHITE) ? "White" : "Black";
@@ -84,6 +84,14 @@ GameController::GameController() {
         }
 
         whoseTurn = (whoseTurn == WHITE) ? BLACK : WHITE;
+    }
+
+    if(board.getWhiteCheckmate()) {
+        printf("Checkmate! Black wins!\n");
+    } else if(board.getBlackCheckmate()) {
+        printf("Checkmate! White wins!\n");
+    } else {
+        printf("Stalemate! Game over.\n");
     }
 
     board.destroyBoard();

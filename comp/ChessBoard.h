@@ -30,6 +30,7 @@ private:
     bool whiteCheckMate = false;
     bool blackCheck = false;
     bool blackCheckMate = false;
+    bool stalemate = false;
     bool hotSquares[8][8][32] = {false};
     ChessPiece* pointerMap[32];
 public:
@@ -39,19 +40,22 @@ public:
     bool castle(Color team, bool kingside); // moves Rook to correct position for a castle
     ChessPiece* getPiece(int row, int col);
     bool getWhiteCheck();
-    bool getWhiteCheckMate();
+    bool getWhiteCheckmate();
     bool getBlackCheck();
-    bool getBlackCheckMate();
+    bool getBlackCheckmate();
+    bool getStalemate();
     void printHotSquares(bool printValues);
     void destroyBoard();
 private:
     void promotion(int row, int col);
     void setAllHotSquares(int row, int col, bool value, bool reevaluating); // find all hot squares from a single piece
     void setSquareHot(int id, int row, int col, bool value); // for one square to be set hot
-    void setWhiteCheck();
-    void setBlackCheck();
-    void setWhiteCheckMate();
-    void setBlackCheckMate();
+    void setWhiteCheck(bool checkCheckmate);
+    void setBlackCheck(bool checkCheckmate);
+    void setWhiteCheckmate();
+    void setBlackCheckmate();
+    void setWhiteStalemate();
+    void setBlackStalemate();
 };
 
 
