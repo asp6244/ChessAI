@@ -1,3 +1,2 @@
 /cmake-build-debug/
-*.obj
-.idea/workspace.xml
+.idea/

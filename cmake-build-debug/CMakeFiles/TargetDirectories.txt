@@ -1,3 +1,0 @@
-C:/Users/alecs/OneDrive/Docs/C++/ChessAI/cmake-build-debug/CMakeFiles/ChessAI.dir
-C:/Users/alecs/OneDrive/Docs/C++/ChessAI/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/alecs/OneDrive/Docs/C++/ChessAI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
