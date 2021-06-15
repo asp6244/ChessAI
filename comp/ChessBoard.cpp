@@ -609,17 +609,7 @@ bool ChessBoard::getBlackCheck() {
 }
 
 void ChessBoard::setBlackCheckmate() {
-    // TODO: must check that another piece can make a move (that does not cause king to enter check)
-        // TODO: iterate through pieces that are still on the board (getIsCaptured() == false)
-        //   start with pawns, then knight, queen, bishop, rook.
-        //   For queen, rook, and bishop, only check for adjacent movements, since all other ones are just extra steps
-        // TODO: iterate through available movements based on piece type
-            // TODO: for each, ensure piece is in the board and not on top of an allied piece
-            // TODO: make pseudo movement, reevalute opponent pieces making the moved square hot,
-            // TODO: for each, if king become hot, reset pseudo movement and reevaluation, skip iteration
-                // TODO: if king does not become hot, move is valid; set stalemate to false, return
-        // TODO: if iterated through all movements from all pieces on the board, no valid moves exist
-        //   set stalemate to true, return
+    // TODO
 }
 
 bool ChessBoard::getBlackCheckmate() {
@@ -627,7 +617,17 @@ bool ChessBoard::getBlackCheckmate() {
 }
 
 void ChessBoard::setWhiteStalemate() {
-    // TODO
+    // TODO: must check that another piece can make a move (that does not cause king to enter check)
+        // TODO: iterate through pieces that are still on the board (getIsCaptured() == false)
+        //   start with pawns, then knight, queen, bishop, rook.
+        //   For queen, rook, and bishop, only check for adjacent movements, since all other ones are just extra steps
+            // TODO: iterate through available movements based on piece type
+            // TODO: for each, ensure piece is in the board and not on top of an allied piece
+                // TODO: make pseudo movement, reevalute opponent pieces making the moved square hot,
+                // TODO: for each, if king become hot, reset pseudo movement and reevaluation, skip iteration
+                    // TODO: if king does not become hot, move is valid; set stalemate to false, return
+        // TODO: if iterated through all movements from all pieces on the board, no valid moves exist
+        //   set stalemate to true, return
 }
 
 void ChessBoard::setBlackStalemate() {
