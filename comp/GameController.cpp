@@ -79,7 +79,7 @@ GameController::GameController() {
             }
         } while(!valid);
 
-        if(board.getWhiteCheck() || board.getBlackCheck()) {
+        if( (board.getWhiteCheck() || board.getBlackCheck() ) && ( !board.getWhiteCheckmate() && !board.getBlackCheckmate() ) ) {
             printf("Check!\n");
         }
 

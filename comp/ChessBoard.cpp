@@ -539,11 +539,21 @@ void ChessBoard::setWhiteCheckmate() {
         hot = false;
         // if inside the board
         if( (row >= 0 && row < 8) && (col >=0 && col < 8) ) {
-            // look through all black pieces for piece making the adjacent piece hot
-            for(int i=BLACK_ID_OFFSET; i<32; i++) {
-                if(hotSquares[adjSquares->row][adjSquares->col][i]) {
+            // if not occupied by an ally
+            bool valid = false;
+            if(board[row][col] != nullptr) {
+                if(board[row][col]->getTeam() == WHITE) {
                     hot = true;
-                    break;
+                }
+            }
+
+            if(!hot) {
+                // look through all black pieces for piece making the adjacent piece hot
+                for (int i = BLACK_ID_OFFSET; i < 32; i++) {
+                    if (hotSquares[adjSquares->row][adjSquares->col][i]) {
+                        hot = true;
+                        break;
+                    }
                 }
             }
         }
