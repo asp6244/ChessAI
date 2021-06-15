@@ -54,6 +54,7 @@ private:
     void setBlackCheck(bool checkCheckmate);
     void setWhiteCheckmate();
     void setBlackCheckmate();
+    bool foundValidMove(int row, int col, ChessPiece* attacker=nullptr, int attackerIndex=-1);
     void setWhiteStalemate();
     void setBlackStalemate();
 };

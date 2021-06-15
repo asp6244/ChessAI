@@ -15,6 +15,8 @@ King::King(Color team) {
 }
 
 bool King::validateMove(int r, int c, ChessBoard *board) {
+    // TODO: this can be simplified by using the array of hot squares from ChessBoard
+
     int rowDisplacement = r-row;
     int colDisplacement = c-col;
     // check if movement is valid

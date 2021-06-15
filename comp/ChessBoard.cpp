@@ -224,13 +224,11 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
         if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
             // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
             ChessPiece* pieceToEvaluate = pointerMap[i];
-            switch(pieceToEvaluate->getType()) {
-                case QUEEN:
-                case BISHOP:
-                case ROOK:
-                    // reevaluate the hot squares for the pieces that were making the old and new location hot
-                    setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
-                    // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
+            PieceType type = pieceToEvaluate->getType();
+            if(type == QUEEN || type == BISHOP || type == ROOK) {
+                // reevaluate the hot squares for the pieces that were making the old and new location hot
+                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
             }
         }
     }
@@ -275,13 +273,11 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
             if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
                 // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
                 ChessPiece* pieceToEvaluate = pointerMap[i];
-                switch(pieceToEvaluate->getType()) {
-                    case QUEEN:
-                    case BISHOP:
-                    case ROOK:
-                        // reevaluate the hot squares for the pieces that were making the old and new location hot
-                        setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
-                        // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
+                PieceType type = pieceToEvaluate->getType();
+                if(type == QUEEN || type == BISHOP || type == ROOK) {
+                    // reevaluate the hot squares for the pieces that were making the old and new location hot
+                    setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                    // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
                 }
             }
         }
@@ -343,13 +339,11 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
         if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
             // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
             ChessPiece* pieceToEvaluate = pointerMap[i];
-            switch(pieceToEvaluate->getType()) {
-                case QUEEN:
-                case BISHOP:
-                case ROOK:
-                    // reevaluate the hot squares for the pieces that were making the old and new location hot
-                    setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
-                    // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
+            PieceType type = pieceToEvaluate->getType();
+            if(type == QUEEN || type == BISHOP || type == ROOK) {
+                // reevaluate the hot squares for the pieces that were making the old and new location hot
+                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
             }
         }
     }
@@ -564,20 +558,81 @@ void ChessBoard::setWhiteCheckmate() {
         }
     }
 
-    // TODO: if king square is hot from only one piece, must capture or block that piece, since king cannot move adjacently
-        // TODO: iterate through pieces making the checking piece hot,
-        //   and then pieces making any squares in the path between the king and the attacking piece hot
+
+    // TODO: count how many pieces are making king hot
+    int numHot = 0;
+    ChessPiece* attacker; // only used if numHot = 1
+    int attackerIndex;
+    // look through all black pieces for piece making the kings piece hot
+    for(int i=BLACK_ID_OFFSET; i<32; i++) {
+        if(hotSquares[row][col][i]) {
+            numHot++;
+            attacker = pointerMap[i];
+            attackerIndex = i;
+        }
+    }
+
+    if(numHot > 1) {
+        // TODO: if more than one piece is making king square hot, set whiteCheckMate to true
+        whiteCheckMate = true;
+    } else {
+        // TODO: if king square is hot from only one piece, must capture or block that piece, since king cannot move adjacently
+        // TODO: iterate through pieces making the attacking piece hot,
+
+        int attackerRow = attacker->getRow();
+        int attackerCol = attacker->getCol();
+
+        if(foundValidMove(attackerRow, attackerCol, attacker)) {
+            return;
+        }
+
+        // TODO: then check pieces making any squares in the path between the king and the attacking piece hot
         //   (only if the attacking piece is queen, rook, or bishop since they are the only pieces that can be blocked)
-            // TODO: for each, make a pseudo movement and reevaluate pieces making that piece hot
-            // TODO: check see if the king will enter check from another piece after movement
-            // TODO: if king enters check from another piece after movement, reset and reevaluate, skip that iteration
-            // TODO: else, set whiteCheckMate to false, return
+        PieceType type = attacker->getType();
+        if(type == QUEEN || type == BISHOP || type == ROOK) {
+            int rowDisplacement = row - attackerRow;
+            int colDisplacement = col - attackerCol;
+
+            // check if jumping over another piece
+            if(rowDisplacement == 0) { // attacking horizontally
+                int i = (colDisplacement > 0) ? attackerCol+1 : attackerCol-1; // starting position for the loop, left or right 1
+                int inc = (colDisplacement > 0) ? 1 : -1; // increment left or right
+
+                for(; i!=col; i+=inc) { // iterate through available spaces
+                    if(foundValidMove(row, i)) {
+                        return;
+                    }
+                }
+            } else if(colDisplacement == 0) { // attacking vertically
+                int i = (rowDisplacement > 0) ? attackerRow+1 : attackerRow-1; // starting position for the loop, up or down 1
+                int inc = (rowDisplacement > 0) ? 1 : -1; // increment up or down
+
+                for(; i!=row; i+=inc) { // iterate through available spaces
+                    if(foundValidMove(i, col)) {
+                        return;
+                    }
+                }
+            } else { // attacking diagonally
+                // incrementer for row and column
+                int rowInc = (rowDisplacement > 0) ? 1 : -1; // moving up or down
+                int colInc = (colDisplacement > 0) ? 1 : -1; // moving right or left
+
+                int j = attackerCol+colInc; // set initial row and column
+                for(int i = attackerRow+rowInc; i!=row; i+=rowInc) { // iterate through available spaces
+                    if(foundValidMove(i, j)) {
+                        return;
+                    }
+                    j+=colInc; // increment row and column
+                }
+            }
+        }
+
         // TODO: if iterated through all options, set whiteCheckMate to true, return
+        whiteCheckMate = true;
+    }
 
-    // TODO: if more than one piece is making king square hot, set whiteCheckMate to true
-
-    // TODO: if checkmate, then stalemate if false
-
+    // TODO: if checkmate, then stalemate is false
+    stalemate = false;
 }
 
 bool ChessBoard::getWhiteCheckmate() {
@@ -612,6 +667,85 @@ void ChessBoard::setBlackCheckmate() {
     // TODO
 }
 
+bool ChessBoard::foundValidMove(int row, int col, ChessPiece* attacker, int attackerIndex) {
+    for(int i=0; i<BLACK_ID_OFFSET; i++) {
+        if(hotSquares[row][col][i]) {
+            // TODO: for each, make a pseudo movement and reevaluate pieces making that piece hot
+            // TODO: check see if the king will enter check from another piece (that is not the attacking piece) after movement
+            // TODO: if king enters check from another piece after movement, reset and reevaluate, skip that iteration
+            // TODO: else, set whiteCheckMate to false, return
+
+            // make pseudo movement
+            ChessPiece* attackingAttacker = pointerMap[i];
+            int attackingAttackerRow = attackingAttacker->getRow();
+            int attackingAttackerCol = attackingAttacker->getCol();
+
+            board[row][col] = attackingAttacker;
+            board[attackingAttackerRow][attackingAttackerCol] = nullptr;
+
+            // remove hot squares from the piece that was captured
+            if(attacker != nullptr) {
+                setAllHotSquares(row, col, false, false);
+            }
+
+            // TODO: reevaluate affected pieces
+            // reevaluate opponent pieces attacking allied piece attacking attacker (that are not the attacking piece)
+            for(int j=BLACK_ID_OFFSET; j<32; j++) {
+                // old location of moved piece
+                if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
+                    // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
+                    ChessPiece* pieceToEvaluate = pointerMap[j];
+                    PieceType type = pieceToEvaluate->getType();
+                    if(type == QUEEN || type == BISHOP || type == ROOK) {
+                        // reevaluate the hot squares for the pieces that were making the old location hot
+                        // reevaluating is false because movement cannot block a piece that was not already blocked
+                        setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+                    }
+                }
+            }
+
+            // set new check value
+            setWhiteCheck(false);
+
+            // set back the moved pieces into their original locations
+            board[attackingAttackerRow][attackingAttackerCol] = attackingAttacker;
+            board[row][col] = attacker;
+
+            // set hot squares back
+            if(attacker != nullptr) {
+                setAllHotSquares(row, col, true, false); // captured piece
+            }
+
+            // re-reevaluate opponent pieces attacking allied piece attacking attacker (that are not the attacking piece)
+            for(int j=BLACK_ID_OFFSET; j<32; j++) {
+                // old location of moved piece
+                if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
+                    // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
+                    ChessPiece* pieceToEvaluate = pointerMap[j];
+                    PieceType type = pieceToEvaluate->getType();
+                    if(type == QUEEN || type == BISHOP || type == ROOK) {
+                        // reevaluate the hot squares for the pieces that were making the old location hot
+                        // reevaluating is false because movement cannot block a piece that was not already blocked
+                        setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+                    }
+                }
+            }
+
+            // check if movement took king out of check
+            if(!whiteCheck) {
+                // valid movement
+                whiteCheckMate = false;
+                setWhiteCheck(false); // reset check value
+                return true;
+            }
+
+        }
+    }
+
+    setWhiteCheck(false); // reset check value
+    return false; // no valid move found
+}
+
 bool ChessBoard::getBlackCheckmate() {
     return blackCheckMate;
 }
@@ -628,10 +762,12 @@ void ChessBoard::setWhiteStalemate() {
                     // TODO: if king does not become hot, move is valid; set stalemate to false, return
         // TODO: if iterated through all movements from all pieces on the board, no valid moves exist
         //   set stalemate to true, return
+    stalemate = false;
 }
 
 void ChessBoard::setBlackStalemate() {
     // TODO
+    stalemate = false;
 }
 
 bool ChessBoard::getStalemate() {
@@ -686,7 +822,11 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
                     } else if(reevaluating) {
                         // ensure that all squares in the direction of the path after being blocked are set to false
                         // only needs to happen when reevaluating is true because this is only used when a piece has moved and
-                        // all squares that made the old piece hot are being re-evaluated
+                        // all squares that made the old piece hot are being re-evaluated.
+                        // TLDR something blocked a path and path squares need to be set to false
+                        if(!hotSquares[r][c][id]) {
+                            break; // TODO: could be broken
+                        }
                         hotSquares[r][c][id] = false;
                     }
                 }
@@ -716,6 +856,9 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
                         // ensure that all squares in the direction of the path after being blocked are set to false
                         // only needs to happen when reevaluating is true because this is only used when a piece has moved and
                         // all squares that made the old piece hot are being re-evaluated
+                        if(!hotSquares[r][col][id]) {
+                            break;
+                        }
                         hotSquares[r][col][id] = false;
                     }
                 }
@@ -731,6 +874,9 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
                         // ensure that all squares in the direction of the path after being blocked are set to false
                         // only needs to happen when reevaluating is true because this is only used when a piece has moved and
                         // all squares that made the old piece hot are being re-evaluated
+                        if(!hotSquares[row][c][id]) {
+                            break;
+                        }
                         hotSquares[row][c][id] = false;
                     }
                 }
