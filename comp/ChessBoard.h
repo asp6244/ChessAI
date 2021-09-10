@@ -39,10 +39,8 @@ public:
     bool movePiece(int row, int col, int newRow, int newCol);
     bool castle(Color team, bool kingside); // moves Rook to correct position for a castle
     ChessPiece* getPiece(int row, int col);
-    bool getWhiteCheck();
-    bool getWhiteCheckmate();
-    bool getBlackCheck();
-    bool getBlackCheckmate();
+    bool getCheck(Color team);
+    bool getCheckmate(Color team);
     bool getStalemate();
     void printHotSquares(bool printValues);
     void destroyBoard();
@@ -50,13 +48,11 @@ private:
     void promotion(int row, int col);
     void setAllHotSquares(int row, int col, bool value, bool reevaluating); // find all hot squares from a single piece
     void setSquareHot(int id, int row, int col, bool value); // for one square to be set hot
-    void setWhiteCheck(bool checkCheckmate);
-    void setBlackCheck(bool checkCheckmate);
-    void setWhiteCheckmate();
-    void setBlackCheckmate();
-    bool foundValidMove(int row, int col, ChessPiece* attacker=nullptr, int attackerIndex=-1);
-    void setWhiteStalemate();
-    void setBlackStalemate();
+    void setCheck(Color team, bool checkCheckmate);
+    void setCheckmate(Color team);
+    bool foundValidMove(Color team, int row, int col, ChessPiece* attacker=nullptr, int attackerIndex=-1);
+    void setStalemate(Color team);
+    bool checkStalemateValidMove(int row, int col, int newRow, int newCol);
 };
 
 

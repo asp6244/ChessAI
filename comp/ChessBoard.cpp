@@ -62,8 +62,8 @@ void ChessBoard::printBoard() {
                 int j = (i==6) ? 4 : 12;
                 int bound = j+4;
                 printf("     ");
-                for (; j < bound; j++) {
-                    if (capturedWhitePieces[j] != nullptr) {
+                for(; j < bound; j++) {
+                    if(capturedWhitePieces[j] != nullptr) {
                         printf(" ");
                         capturedWhitePieces[j]->print();
                     } else {
@@ -79,8 +79,8 @@ void ChessBoard::printBoard() {
                 int j = (i==1) ? 4 : 12;
                 int bound = j+4;
                 printf("     ");
-                for (; j < bound; j++) {
-                    if (capturedBlackPieces[j] != nullptr) {
+                for(; j < bound; j++) {
+                    if(capturedBlackPieces[j] != nullptr) {
                         printf(" ");
                         capturedBlackPieces[j]->print();
                     } else {
@@ -110,8 +110,8 @@ void ChessBoard::printBoard() {
                 int j = (i==7) ? 0 : 8;
                 int bound = j+4;
                 printf("     ");
-                for (; j < bound; j++) {
-                    if (capturedWhitePieces[j] != nullptr) {
+                for(; j < bound; j++) {
+                    if(capturedWhitePieces[j] != nullptr) {
                         printf(" ");
                         capturedWhitePieces[j]->print();
                     } else {
@@ -124,8 +124,8 @@ void ChessBoard::printBoard() {
                 int j = (i==2) ? 0 : 8;
                 int bound = j+4;
                 printf("     ");
-                for (; j < bound; j++) {
-                    if (capturedBlackPieces[j] != nullptr) {
+                for(; j < bound; j++) {
+                    if(capturedBlackPieces[j] != nullptr) {
                         printf(" ");
                         capturedBlackPieces[j]->print();
                     } else {
@@ -234,11 +234,7 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     }
 
     // TODO: check to see if, after movement, king is not in check
-    if(team == WHITE) {
-        setWhiteCheck(false);
-    } else {
-        setBlackCheck(false);
-    }
+    setCheck(team, false);
 
     if( (whiteCheck && team == WHITE) || (blackCheck && team == BLACK) ) {
         // king is in check following movement
@@ -267,7 +263,6 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
         // TODO: reevaluate affected pieces
         // reevaluate affected opponent pieces
         i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
-        bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
         for(; i<bound; i++) {
             // old location and new location of moved piece
             if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
@@ -318,7 +313,7 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     // look for promotion from pawn
     if(piece->getType() == PAWN) {
         Color team = piece->getTeam();
-        if ((newRow == 7 && team == WHITE) || (newRow == 0 && team == BLACK)) {
+        if((newRow == 7 && team == WHITE) || (newRow == 0 && team == BLACK)) {
             promotion(newRow, newCol);
         }
     }
@@ -333,7 +328,6 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     // TODO: I modified this range
     // only need to reevaluate allied pieces, since this was already done for opponent pieces
     i = (team == WHITE) ? 0 : BLACK_ID_OFFSET;
-    bound = (team == WHITE) ? BLACK_ID_OFFSET : 32;
     for(; i<bound; i++) {
         // old location and new location of moved piece
         if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
@@ -352,17 +346,13 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     // set the opponents check status, since the moving players check status has already been set
     stalemate = true; // used to determine if stalemate needs to be checked
     if(team == WHITE) {
-        setBlackCheck(true);
-
-        if(stalemate) { // stalemate needs to be checked if checking for checkmate did not return false for stalemate
-            setWhiteStalemate();
-        }
+        setCheck(BLACK, true);
     } else {
-        setWhiteCheck(true);
+        setCheck(WHITE, true);
+    }
 
-        if(stalemate) { // stalemate needs to be checked if checking for checkmate did not return false for stalemate
-            setBlackStalemate();
-        }
+    if(stalemate) { // stalemate needs to be checked if checking for checkmate did not return false for stalemate
+        setStalemate(team);
     }
 
     printHotSquares(false); // TODO: remove
@@ -494,36 +484,56 @@ void ChessBoard::promotion(int row, int col) {
     } while(!valid);
 }
 
-void ChessBoard::setWhiteCheck(bool checkCheckmate) {
-    ChessPiece* king = pointerMap[KING_ID];
+void ChessBoard::setCheck(Color team, bool checkCheckmate) {
+    ChessPiece* king = pointerMap[KING_ID + ((team == WHITE) ? 0 : BLACK_ID_OFFSET)];
     int row = king->getRow();
     int col = king->getCol();
 
-    whiteCheck = false;
+    if(team == WHITE) {
+        whiteCheck = false;
+    } else {
+        blackCheck = false;
+    }
     // look through all black pieces for piece making the kings piece hot
-    for(int i=BLACK_ID_OFFSET; i<32; i++) {
+    int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+    int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
+    for(; i<bound; i++) {
         if(hotSquares[row][col][i]) {
-            whiteCheck = true;
+            if(team == WHITE) {
+                whiteCheck = true;
+            } else {
+                blackCheck = true;
+            }
             break;
         }
     }
 
     // checkmate only occurs when check occurs
-    if(whiteCheck && checkCheckmate) {
-        setWhiteCheckmate();
+    if( ((whiteCheck && team == WHITE) || (blackCheck && team == BLACK)) && checkCheckmate ) {
+        setCheckmate(team);
     }
 }
 
-bool ChessBoard::getWhiteCheck() {
-    return whiteCheck;
+bool ChessBoard::getCheck(Color team) {
+    return (team == WHITE) ? whiteCheck : blackCheck;
 }
 
-void ChessBoard::setWhiteCheckmate() {
-    // TODO: look for adjacent square for the king to move into (not hot)
-    // TODO: if one exists, set whiteCheckMate to false, return
+// TODO: look for adjacent square for the team's king to move into (not hot)
+// TODO: if one exists, set team's checkmate boolean to false, return
+// TODO: count how many pieces are making king hot
+// TODO: if more than one piece is making king square hot, set team's checkmate boolean to true
+// TODO: if king square is hot from only one piece, must capture or block that piece, since king cannot move adjacently
+// TODO: iterate through pieces making the attacking piece hot,
+    // TODO: then check pieces making any squares in the path between the king and the attacking piece hot
+    //   (only if the attacking piece is queen, rook, or bishop since they are the only pieces that can be blocked)
+// TODO: if iterated through all options, set team's checkmate boolean to true, return
+// TODO: if checkmate, then stalemate is false
+void ChessBoard::setCheckmate(Color team) {
+    // look for adjacent square for the team's king to move into (not hot)
+    // if one exists, set team's checkmate boolean to false, return
 
-    // get white king
-    ChessPiece* king = pointerMap[KING_ID];
+    // get king
+    ChessPiece* king = pointerMap[KING_ID + ((team == WHITE) ? 0 : BLACK_ID_OFFSET)];
     int row = king->getRow();
     int col = king->getCol();
     // create array of all adjacent square locations around the king to make iterating through them easier
@@ -531,26 +541,35 @@ void ChessBoard::setWhiteCheckmate() {
         int row;
         int col;
     };
-    struct squareCoordinates adjSquares[8] = {{row, col+1}, {row+1, col+1}, {row+1, col}, {row+1, col-1}, {row, col-1}, {row-1, col-1}, {row-1, col}, {row-1, col+1}};
+    struct squareCoordinates adjSquares[8] = {{row, col+1},
+                                              {row+1, col+1},
+                                              {row+1, col},
+                                              {row+1, col-1},
+                                              {row, col-1},
+                                              {row-1, col-1},
+                                              {row-1, col},
+                                              {row-1, col+1}};
 
     // for each adjacent square
     bool hot;
+    int opponentBound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
     for(struct squareCoordinates adjSquare : adjSquares) {
         hot = false;
         // if inside the board
-        if( (row >= 0 && row < 8) && (col >=0 && col < 8) ) {
+        if( (adjSquare.row >= 0 && adjSquare.row < 8) && (adjSquare.col >=0 && adjSquare.col < 8) ) {
             // if not occupied by an ally
-            bool valid = false;
-            if(board[row][col] != nullptr) {
-                if(board[row][col]->getTeam() == WHITE) {
+            if(board[adjSquare.row][adjSquare.col] != nullptr) {
+                if(board[adjSquare.row][adjSquare.col]->getTeam() == team) {
                     hot = true;
                 }
             }
 
             if(!hot) {
-                // look through all black pieces for piece making the adjacent piece hot
-                for (int i = BLACK_ID_OFFSET; i < 32; i++) {
-                    if (hotSquares[adjSquares->row][adjSquares->col][i]) {
+                // look through all opponent pieces for piece making the adjacent piece hot
+                int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+                for(; i<opponentBound; i++) {
+                    // check if adjacent piece is hot from specific opponent piece
+                    if(hotSquares[adjSquare.row][adjSquare.col][i]) {
                         hot = true;
                         break;
                     }
@@ -558,10 +577,14 @@ void ChessBoard::setWhiteCheckmate() {
             }
         }
 
-        // check if adjacent piece is hot
+        // if the square is not hot
         if(!hot) {
-            // if not, set boolean to false
-            whiteCheckMate = false;
+            // set boolean to false
+            if(team == WHITE) {
+                whiteCheckMate = false;
+            } else {
+                blackCheckMate = false;
+            }
             // if king can move, no stalemate exists
             stalemate = false;
             return;
@@ -569,34 +592,42 @@ void ChessBoard::setWhiteCheckmate() {
     }
 
 
-    // TODO: count how many pieces are making king hot
+    // count how many pieces are making king hot
     int numHot = 0;
-    ChessPiece* attacker; // only used if numHot = 1
-    int attackerIndex;
-    // look through all black pieces for piece making the kings piece hot
-    for(int i=BLACK_ID_OFFSET; i<32; i++) {
-        if(hotSquares[row][col][i]) {
-            numHot++;
-            attacker = pointerMap[i];
-            attackerIndex = i;
+    ChessPiece *attacker = nullptr; // only used if numHot = 1
+    int attackerIndex = -1;
+    // look through all opponent pieces for piece making the kings piece hot
+    {
+        int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+        for(; i<opponentBound; i++) {
+            if(hotSquares[row][col][i]) {
+                numHot++;
+                attacker = pointerMap[i];
+                attackerIndex = i;
+            }
         }
     }
 
     if(numHot > 1) {
-        // TODO: if more than one piece is making king square hot, set whiteCheckMate to true
-        whiteCheckMate = true;
-    } else {
-        // TODO: if king square is hot from only one piece, must capture or block that piece, since king cannot move adjacently
-        // TODO: iterate through pieces making the attacking piece hot,
+        // if more than one piece is making king square hot, set team's checkmate boolean to true
+        if(team == WHITE) {
+            whiteCheckMate = true;
+        } else {
+            blackCheckMate = true;
+        }
+    } else if(attacker != nullptr) {
+        // if king square is hot from only one piece, must capture or block that piece, since king cannot move adjacently
+        // iterate through pieces making the attacking piece hot,
 
         int attackerRow = attacker->getRow();
         int attackerCol = attacker->getCol();
 
-        if(foundValidMove(attackerRow, attackerCol, attacker)) {
+        if(foundValidMove(team, attackerRow, attackerCol, attacker, attackerIndex)) {
+            stalemate = false;
             return;
         }
 
-        // TODO: then check pieces making any squares in the path between the king and the attacking piece hot
+        // then check pieces making any squares in the path between the king and the attacking piece hot
         //   (only if the attacking piece is queen, rook, or bishop since they are the only pieces that can be blocked)
         PieceType type = attacker->getType();
         if(type == QUEEN || type == BISHOP || type == ROOK) {
@@ -609,7 +640,8 @@ void ChessBoard::setWhiteCheckmate() {
                 int inc = (colDisplacement > 0) ? 1 : -1; // increment left or right
 
                 for(; i!=col; i+=inc) { // iterate through available spaces
-                    if(foundValidMove(row, i)) {
+                    if(foundValidMove(team, row, i)) {
+                        stalemate = false;
                         return;
                     }
                 }
@@ -618,7 +650,8 @@ void ChessBoard::setWhiteCheckmate() {
                 int inc = (rowDisplacement > 0) ? 1 : -1; // increment up or down
 
                 for(; i!=row; i+=inc) { // iterate through available spaces
-                    if(foundValidMove(i, col)) {
+                    if(foundValidMove(team, i, col)) {
+                        stalemate = false;
                         return;
                     }
                 }
@@ -629,7 +662,8 @@ void ChessBoard::setWhiteCheckmate() {
 
                 int j = attackerCol+colInc; // set initial row and column
                 for(int i = attackerRow+rowInc; i!=row; i+=rowInc) { // iterate through available spaces
-                    if(foundValidMove(i, j)) {
+                    if(foundValidMove(team, i, j)) {
+                        stalemate = false;
                         return;
                     }
                     j+=colInc; // increment row and column
@@ -637,53 +671,33 @@ void ChessBoard::setWhiteCheckmate() {
             }
         }
 
-        // TODO: if iterated through all options, set whiteCheckMate to true, return
-        whiteCheckMate = true;
-    }
-
-    // TODO: if checkmate, then stalemate is false
-    stalemate = false;
-}
-
-bool ChessBoard::getWhiteCheckmate() {
-    return whiteCheckMate;
-}
-
-void ChessBoard::setBlackCheck(bool checkCheckmate) {
-    ChessPiece* king = pointerMap[KING_ID + BLACK_ID_OFFSET];
-    int row = king->getRow();
-    int col = king->getCol();
-
-    blackCheck = false;
-    // look through all white pieces for piece making the kings piece hot
-    for(int i=0; i<BLACK_ID_OFFSET; i++) {
-        if(hotSquares[row][col][i]) {
-            blackCheck = true;
-            break;
+        // if iterated through all options, set team's checkmate boolean to true, return
+        if(team == WHITE) {
+            whiteCheckMate = true;
+        } else {
+            blackCheckMate = true;
         }
+
+        // if checkmate, then stalemate is false
+        stalemate = false;
+    } else {
+        fprintf(stderr, "Error: attacker is nullptr [setCheckmate].\n");
+        exit(99);
     }
-
-    // checkmate only occurs when check occurs
-    if(blackCheck && checkCheckmate) {
-        setBlackCheckmate();
-    }
 }
 
-bool ChessBoard::getBlackCheck() {
-    return blackCheck;
-}
-
-void ChessBoard::setBlackCheckmate() {
-    // TODO
-}
-
-bool ChessBoard::foundValidMove(int row, int col, ChessPiece* attacker, int attackerIndex) {
-    for(int i=0; i<BLACK_ID_OFFSET; i++) {
+// TODO; determine if an allied piece can be moved to the specified row/column
+// TODO: iterate through allied pieces making the specified square hot
+    // TODO: for each, make a pseudo movement and reevaluate pieces making that piece hot
+    // TODO: check to see if the king will enter check from another piece (that is not the attacking piece) after movement
+    // TODO: if king enters check from another piece after movement, reset and reevaluate, skip that iteration
+    // TODO: else, return true
+// attacker and attackerIndex will be nullptr and -1 if the requested move will not capture an opponent piece
+bool ChessBoard::foundValidMove(Color team, int row, int col, ChessPiece* attacker, int attackerIndex) {
+    int i = (team == WHITE) ? 0 : BLACK_ID_OFFSET;
+    int alliedBound = (team == WHITE) ? BLACK_ID_OFFSET : 32;
+    for(; i<alliedBound; i++) {
         if(hotSquares[row][col][i]) {
-            // TODO: for each, make a pseudo movement and reevaluate pieces making that piece hot
-            // TODO: check see if the king will enter check from another piece (that is not the attacking piece) after movement
-            // TODO: if king enters check from another piece after movement, reset and reevaluate, skip that iteration
-            // TODO: else, set whiteCheckMate to false, return
 
             // make pseudo movement
             ChessPiece* attackingAttacker = pointerMap[i];
@@ -698,24 +712,27 @@ bool ChessBoard::foundValidMove(int row, int col, ChessPiece* attacker, int atta
                 setAllHotSquares(row, col, false, false);
             }
 
-            // TODO: reevaluate affected pieces
             // reevaluate opponent pieces attacking allied piece attacking attacker (that are not the attacking piece)
-            for(int j=BLACK_ID_OFFSET; j<32; j++) {
-                // old location of moved piece
-                if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
-                    // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
-                    ChessPiece* pieceToEvaluate = pointerMap[j];
-                    PieceType type = pieceToEvaluate->getType();
-                    if(type == QUEEN || type == BISHOP || type == ROOK) {
-                        // reevaluate the hot squares for the pieces that were making the old location hot
-                        // reevaluating is false because movement cannot block a piece that was not already blocked
-                        setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+            int opponentBound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
+            {
+                int j = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+                for(; j < opponentBound; j++) {
+                    // old location of moved piece
+                    if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
+                        // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
+                        ChessPiece *pieceToEvaluate = pointerMap[j];
+                        PieceType type = pieceToEvaluate->getType();
+                        if(type == QUEEN || type == BISHOP || type == ROOK) {
+                            // reevaluate the hot squares for the pieces that were making the old location hot
+                            // reevaluating is false because movement cannot block a piece that was not already blocked
+                            setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+                        }
                     }
                 }
             }
 
             // set new check value
-            setWhiteCheck(false);
+            setCheck(team, false);
 
             // set back the moved pieces into their original locations
             board[attackingAttackerRow][attackingAttackerCol] = attackingAttacker;
@@ -727,57 +744,240 @@ bool ChessBoard::foundValidMove(int row, int col, ChessPiece* attacker, int atta
             }
 
             // re-reevaluate opponent pieces attacking allied piece attacking attacker (that are not the attacking piece)
-            for(int j=BLACK_ID_OFFSET; j<32; j++) {
-                // old location of moved piece
-                if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
-                    // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
-                    ChessPiece* pieceToEvaluate = pointerMap[j];
-                    PieceType type = pieceToEvaluate->getType();
-                    if(type == QUEEN || type == BISHOP || type == ROOK) {
-                        // reevaluate the hot squares for the pieces that were making the old location hot
-                        // reevaluating is false because movement cannot block a piece that was not already blocked
-                        setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+            {
+                int j = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+                for(; j < opponentBound; j++) {
+                    // old location of moved piece
+                    if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
+                        // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
+                        ChessPiece *pieceToEvaluate = pointerMap[j];
+                        PieceType type = pieceToEvaluate->getType();
+                        if(type == QUEEN || type == BISHOP || type == ROOK) {
+                            // reevaluate the hot squares for the pieces that were making the old location hot
+                            // reevaluating is false because movement cannot block a piece that was not already blocked
+                            setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+                        }
                     }
                 }
             }
 
             // check if movement took king out of check
-            if(!whiteCheck) {
-                // valid movement
+            if(!whiteCheck && team == WHITE) {
+                // valid white movement
                 whiteCheckMate = false;
-                setWhiteCheck(false); // reset check value
+                setCheck(team, false); // reset check value
+                return true;
+            } else if (!blackCheck && team == BLACK) {
+                // valid black movement
+                blackCheckMate = false;
+                setCheck(team, false); // reset check value
                 return true;
             }
-
         }
     }
 
-    setWhiteCheck(false); // reset check value
+    setCheck(team, false); // reset check value
     return false; // no valid move found
 }
 
-bool ChessBoard::getBlackCheckmate() {
-    return blackCheckMate;
+bool ChessBoard::getCheckmate(Color team) {
+    return (team == WHITE) ? whiteCheckMate : blackCheckMate;
 }
 
-void ChessBoard::setWhiteStalemate() {
-    // TODO: must check that another piece can make a move (that does not cause king to enter check)
-        // TODO: iterate through pieces that are still on the board (getIsCaptured() == false)
-        //   start with pawns, then knight, queen, bishop, rook.
+// TODO: must check that another piece can make a move (that does not cause king to enter check)
+    // TODO: iterate through pieces that are still on the board (getIsCaptured() == false)
+    //   start with pawns, then knight, queen, bishop, rook.
+        // TODO: iterate through available movements based on piece type
         //   For queen, rook, and bishop, only check for adjacent movements, since all other ones are just extra steps
-            // TODO: iterate through available movements based on piece type
-            // TODO: for each, ensure piece is in the board and not on top of an allied piece
-                // TODO: make pseudo movement, reevalute opponent pieces making the moved square hot,
-                // TODO: for each, if king become hot, reset pseudo movement and reevaluation, skip iteration
-                    // TODO: if king does not become hot, move is valid; set stalemate to false, return
-        // TODO: if iterated through all movements from all pieces on the board, no valid moves exist
-        //   set stalemate to true, return
-    stalemate = false;
+            // TODO: for each, ensure move is in the board and not on top of an allied piece
+            // TODO: make pseudo movement, reevalute opponent pieces that make the moved square hot.
+            // TODO: If king becomes hot, reset pseudo movement and reevaluation, skip iteration
+                // TODO: if king does not become hot, move is valid; set stalemate to false, return
+    // TODO: if iterated through all movements from all pieces on the board, no valid moves exist
+    //   set stalemate to true, return
+void ChessBoard::setStalemate(Color team) {
+    // get the order of pieces that should be checked for maximum efficiency
+    int piece_order[16];
+    for(int i=0; i<8; i++) {
+        piece_order[i] = PAWS_START_ID + i;
+    }
+    piece_order[8] = KNIGHT_QS_ID;
+    piece_order[9] = KNIGHT_KS_ID;
+    piece_order[10] = QUEEN_ID;
+    piece_order[11] = BISHOP_QS_ID;
+    piece_order[12] = BISHOP_KS_ID;
+    piece_order[13] = ROOK_QS_ID;
+    piece_order[14] = ROOK_KS_ID;
+    piece_order[15] = KING_ID;
+
+    if(team == BLACK) {
+        for(int i=0; i<16; i++) {
+            piece_order[i] += BLACK_ID_OFFSET;
+        }
+    }
+
+    // iterate through pieces that are still on the board
+    for(int id : piece_order) {
+        ChessPiece* piece = pointerMap[id];
+        if(!piece->getIsCaptured()) {
+            int row = piece->getRow();
+            int col = piece->getCol();
+            PieceType type = piece->getType();
+
+            // set squares hot based on piece type
+            // TODO: consider moving these to the respective piece objects
+            switch(type) {
+                case KING:
+                case QUEEN:
+                case BISHOP:
+                    if(checkStalemateValidMove(row, col, row+1, col+1) ||
+                       checkStalemateValidMove(row, col, row+1, col-1) ||
+                       checkStalemateValidMove(row, col, row-1, col+1) ||
+                       checkStalemateValidMove(row, col, row-1, col-1)) {
+                        stalemate = false;
+                        return;
+                    }
+
+                    // if the piece is a Queen, set hot squares in rank and file
+                    if(type == BISHOP) {
+                        break;
+                    }
+                case ROOK:
+                    if(checkStalemateValidMove(row, col, row+1, col) ||
+                       checkStalemateValidMove(row, col, row-1, col) ||
+                       checkStalemateValidMove(row, col, row, col+1) ||
+                       checkStalemateValidMove(row, col, row, col-1)) {
+                        stalemate = false;
+                        return;
+                    }
+
+                    // do not set stalemate if king is in check(mate)
+                    if(type == KING) {
+                        int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+                        int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
+                        for(; i<bound; i++) {
+                            if(hotSquares[row][col][i]) {
+                                // this should theoretically never be reached because
+                                // this condition is checked when checkmate is checked
+                                stalemate = false;
+                                return;
+                            }
+                        }
+                    }
+
+                    break;
+                case KNIGHT:
+                    if(checkStalemateValidMove(row, col, row+1, col+2) ||
+                       checkStalemateValidMove(row, col, row+2, col+1) ||
+                       checkStalemateValidMove(row, col, row+2, col-1) ||
+                       checkStalemateValidMove(row, col, row+1, col-2) ||
+                       checkStalemateValidMove(row, col, row-1, col-2) ||
+                       checkStalemateValidMove(row, col, row-2, col-1) ||
+                       checkStalemateValidMove(row, col, row-2, col+1) ||
+                       checkStalemateValidMove(row, col, row-1, col+2)) {
+                        stalemate = false;
+                        return;
+                    }
+
+                    break;
+                case PAWN:
+                    if(team == WHITE) {
+                        if(checkStalemateValidMove(row, col, row+1, col+1) ||
+                           checkStalemateValidMove(row, col, row+1, col-1)) {
+                            stalemate = false;
+                            return;
+                        }
+                    } else {
+                        if(checkStalemateValidMove(row, col, row-1, col+1) ||
+                           checkStalemateValidMove(row, col, row-1, col-1)) {
+                            stalemate = false;
+                            return;
+                        }
+                    }
+
+                    break;
+                default:
+                    fprintf(stderr, "Error: has no type [setStalemate].\n");
+                    exit(99);
+            }
+        }
+    }
+
+    stalemate = true;
 }
 
-void ChessBoard::setBlackStalemate() {
-    // TODO
-    stalemate = false;
+bool ChessBoard::checkStalemateValidMove(int row, int col, int newRow, int newCol) {
+    // ensure move is inside the board
+    if(newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8) {
+        return false;
+    }
+
+    ChessPiece* piece = board[row][col];
+    Color team = piece->getTeam();
+    ChessPiece* attackedPiece = board[newRow][newCol];
+
+    // ensure piece is not on top of an allied piece
+    if(attackedPiece != nullptr) {
+        if(attackedPiece->getTeam() == team) {
+            return false;
+        }
+    }
+
+    // make pseudo movement
+    board[row][col] = nullptr;
+    board[newRow][newCol] = piece;
+
+    // reevaluate opponent pieces that make the moved square hot
+    int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+    int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
+    for(; i<bound; i++) {
+        // old location of moved piece
+        if(hotSquares[row][col][i]) { // TODO: hotSquares[newRow][newCol][i] verify this does not need to be checked with unit testing
+            // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
+            ChessPiece* pieceToEvaluate = pointerMap[i];
+            PieceType type = pieceToEvaluate->getType();
+            if(type == QUEEN || type == BISHOP || type == ROOK) {
+                // reevaluate the hot squares for the pieces that were making and new location hot
+                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
+            }
+        }
+    }
+
+    // if king does not become hot, move is valid
+    ChessPiece* king = pointerMap[KING_ID + ((team == WHITE) ? 0 : BLACK_ID_OFFSET)];
+    int kingRow = king->getRow();
+    int kingCol = king->getCol();
+    i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+    bool hot = false;
+    for(; i<bound; i++) {
+        if(hotSquares[kingRow][kingCol][i]) {
+            hot = true;
+            break;
+        }
+    }
+
+    // reset pseudo movement
+    board[row][col] = piece;
+    board[newRow][newCol] = attackedPiece;
+
+    // reset reevaluation of opponent pieces that make the moved square hot
+    i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
+    for(; i<bound; i++) {
+        // old location of moved piece
+        if(hotSquares[row][col][i]) { // TODO: hotSquares[newRow][newCol][i] verify this does not need to be checked with unit testing
+            // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
+            ChessPiece* pieceToEvaluate = pointerMap[i];
+            PieceType type = pieceToEvaluate->getType();
+            if(type == QUEEN || type == BISHOP || type == ROOK) {
+                // reevaluate the hot squares for the pieces that were making the old location hot
+                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
+            }
+        }
+    }
+
+    return !hot;
 }
 
 bool ChessBoard::getStalemate() {
@@ -851,12 +1051,12 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
             bool pathBlocked;
 
             // loop through all four directions that must be checked
-            for (int i = 0; i < 2; i++) {
+            for(int i = 0; i < 2; i++) {
                 inc = i==0 ? 1 : -1;
                 bound = i==0 ? 8 : -1;
 
                 pathBlocked = false;
-                for (int r = row + inc; r != bound; r += inc) {
+                for(int r = row + inc; r != bound; r += inc) {
                     if(!pathBlocked) {
                         hotSquares[r][col][id] = value;
                         if(board[r][col] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
@@ -874,7 +1074,7 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
                 }
 
                 pathBlocked = false; // reset to false for new direction
-                for (int c = col + inc; c != bound; c += inc) {
+                for(int c = col + inc; c != bound; c += inc) {
                     if(!pathBlocked) {
                         hotSquares[row][c][id] = value;
                         if(board[row][c] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
@@ -928,22 +1128,22 @@ void ChessBoard::printHotSquares(bool printValues) {
     printf("Printing hot squares...\n");
 
     if(printValues) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
                 printf("Row: %d    Col: %d\n", i, j);
                 printf("    White:    Black:\n");
-                for (int k = 0; k < 16; k++) {
+                for(int k = 0; k < 16; k++) {
                     if(k<=9) {
                         printf(" ");
                     }
                     printf("%d: ", k);
-                    if (hotSquares[i][j][k]) {
+                    if(hotSquares[i][j][k]) {
                         printf("X");
                     } else {
                         printf(" ");
                     }
                     printf("         ");
-                    if (hotSquares[i][j][k+16]) {
+                    if(hotSquares[i][j][k+16]) {
                         printf("O");
                     }
                     printf("\n");

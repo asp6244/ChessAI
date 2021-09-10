@@ -36,7 +36,7 @@ bool King::validateMove(int r, int c, ChessBoard *board) {
             return false;
         }
 
-        if( (board->getWhiteCheck() && team == WHITE) || (board->getBlackCheck() && team == BLACK) ) {
+        if(board->getCheck(team)) {
             printf("  Invalid move, castle condition not met; King cannot be in check to castle.\n");
             return false;
         }
