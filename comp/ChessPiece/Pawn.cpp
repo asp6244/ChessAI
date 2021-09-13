@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <cmath>
 #include "Pawn.h"
-#include "ChessPiece.h"
 #include "../ChessBoard.h"
 
 Pawn::Pawn(Color team, int col) {

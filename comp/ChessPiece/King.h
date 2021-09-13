@@ -5,10 +5,10 @@
 #ifndef CHESSAI_KING_H
 #define CHESSAI_KING_H
 
+#include "ColorsType.h"
 #include "Rook.h"
 
 class ChessBoard;
-enum Color;
 
 class King {
 protected:
@@ -18,7 +18,7 @@ protected:
     bool hasNotMoved = true;
     int proposedRow = -1;
     int proposedCol = -1;
-    Rook* castledRook;
+    Rook* castledRook = nullptr;
 public:
     King(Color team);
     bool validateMove(int r, int c, ChessBoard* board);

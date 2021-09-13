@@ -6,12 +6,13 @@
 #define CHESS_GAMECONTROLLER_H
 
 #include "ChessBoard.h"
-#include "ChessPiece/ChessPiece.h"
+#include "../ColorsType.h"
 
 class GameController {
 protected:
     ChessBoard board;
     Color whoseTurn;
+    bool resigned = false;
 public:
     GameController();
 };

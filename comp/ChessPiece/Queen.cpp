@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <cmath>
 #include "Queen.h"
-#include "ChessPiece.h"
 #include "../ChessBoard.h"
 
 Queen::Queen(Color team) {

@@ -5,8 +5,9 @@
 #ifndef CHESSAI_ROOK_H
 #define CHESSAI_ROOK_H
 
+#include "ColorsType.h"
+
 class ChessBoard;
-enum Color;
 
 class Rook {
 protected:

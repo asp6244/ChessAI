@@ -11,6 +11,7 @@
 #include "Knight.h"
 #include "Rook.h"
 #include "Pawn.h"
+#include "ColorsType.h"
 
 enum PieceType {
     KING,
@@ -19,11 +20,6 @@ enum PieceType {
     KNIGHT,
     ROOK,
     PAWN
-};
-
-enum Color {
-    WHITE,
-    BLACK
 };
 
 union TypePointer {

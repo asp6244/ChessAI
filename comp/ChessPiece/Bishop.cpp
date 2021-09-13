@@ -5,7 +5,6 @@
 #include <cmath>
 #include <cstdio>
 #include "Bishop.h"
-#include "ChessPiece.h"
 #include "../ChessBoard.h"
 
 Bishop::Bishop(Color team, bool kingside) {

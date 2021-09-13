@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include "Rook.h"
-#include "ChessPiece.h"
 #include "../ChessBoard.h"
 
 Rook::Rook(Color team, bool kingside) {

@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <cmath>
 #include "Knight.h"
-#include "ChessPiece.h"
 
 Knight::Knight(Color team, bool kingside) {
     this->team = team;

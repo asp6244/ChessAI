@@ -5,7 +5,6 @@
 #include <cstdio>
 #include <cmath>
 #include "King.h"
-#include "ChessPiece.h"
 #include "../ChessBoard.h"
 
 King::King(Color team) {

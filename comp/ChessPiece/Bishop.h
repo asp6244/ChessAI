@@ -5,6 +5,8 @@
 #ifndef CHESSAI_BISHOP_H
 #define CHESSAI_BISHOP_H
 
+#include "ColorsType.h"
+
 class ChessBoard;
 enum Color;
 

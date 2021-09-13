@@ -5,7 +5,7 @@
 #ifndef CHESSAI_KNIGHT_H
 #define CHESSAI_KNIGHT_H
 
-enum Color;
+#include "ColorsType.h"
 
 class Knight {
 protected:

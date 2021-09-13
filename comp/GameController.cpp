@@ -7,13 +7,19 @@
 #include "GameController.h"
 
 GameController::GameController() {
-    whoseTurn = WHITE;
+    whoseTurn = BLACK; // this gets flipped immediately as the game starts
 
-    while(!board.getCheckmate(WHITE) && !board.getCheckmate(BLACK) && !board.getStalemate()) {
+    while(!board.getCheckmate(WHITE) &&
+          !board.getCheckmate(BLACK) &&
+          !board.getStalemate() &&
+          !resigned) {
+        whoseTurn = (whoseTurn == WHITE) ? BLACK : WHITE;
+
         board.printBoard();
 
         const char* whoseTurnString = (whoseTurn == WHITE) ? "White" : "Black";
         printf("%s's move:\n  To make a move, enter coordinate of piece to move and its new location.\n"
+               "  Type 'resign' to resign from the game.\n"
                "  Sample input:  A2 A3  or  g8 h6\n", whoseTurnString);
         std::string input;
 
@@ -22,11 +28,15 @@ GameController::GameController() {
         // get the integer coordinates from the correct player
         bool valid;
         do {
-            printf(">>");
+            printf(">> ");
             // get input
             std::getline(std::cin, input);
 
-            // TODO: resign
+            // check for resignation
+            if(input == "resign") {
+                resigned = true;
+                break;
+            }
 
             std::string compoundLocation; // contains both the current location and the new location
             int validChars = 0; // counts the number of non-space characters were read
@@ -68,7 +78,8 @@ GameController::GameController() {
                     valid = board.getPiece(row, col)->getTeam() == whoseTurn;
 
                     if (!valid) {
-                        printf("  It's %s's turn. Only a %s piece can move.\n", whoseTurnString, whoseTurnString);
+                        printf("  It's %s's turn. Only a %s piece can move.\n",
+                                whoseTurnString, whoseTurnString);
                     }
                 }
 
@@ -79,19 +90,25 @@ GameController::GameController() {
             }
         } while(!valid);
 
-        if( (board.getCheck(WHITE) || board.getCheck(BLACK) ) && ( !board.getCheckmate(WHITE) && !board.getCheckmate(BLACK) ) ) {
+        if( (board.getCheck(WHITE) || board.getCheck(BLACK)) &&
+            (!board.getCheckmate(WHITE) && !board.getCheckmate(BLACK)) ) {
             printf("Check!\n");
         }
-
-        whoseTurn = (whoseTurn == WHITE) ? BLACK : WHITE;
     }
 
     if(board.getCheckmate(WHITE)) {
         printf("Checkmate! Black wins!\n");
     } else if(board.getCheckmate(BLACK)) {
         printf("Checkmate! White wins!\n");
-    } else {
+    } else if(board.getStalemate()) {
         printf("Stalemate! Game over.\n");
+    } else {
+        // resigned
+        if(whoseTurn == WHITE) {
+            printf("White resigns. Black wins!\n");
+        } else {
+            printf("Black resigns. White wins!\n");
+        }
     }
 
     board.destroyBoard();

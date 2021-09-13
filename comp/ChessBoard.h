@@ -32,7 +32,7 @@ private:
     bool blackCheckMate = false;
     bool stalemate = false;
     bool hotSquares[8][8][32] = {false};
-    ChessPiece* pointerMap[32];
+    ChessPiece* pointerMap[32] = {nullptr};
 public:
     ChessBoard(); // create a new board with new pieces
     void printBoard();

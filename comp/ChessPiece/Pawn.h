@@ -5,8 +5,9 @@
 #ifndef CHESSAI_PAWN_H
 #define CHESSAI_PAWN_H
 
+#include "ColorsType.h"
+
 class ChessBoard;
-enum Color;
 
 class Pawn {
 protected:
