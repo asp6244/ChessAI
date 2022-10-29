@@ -7,15 +7,15 @@
 #include "Pawn.h"
 #include "../ChessBoard.h"
 
-Pawn::Pawn(Color team, int col) {
+Pawn::Pawn(Color team, int file) {
     this->team = team;
-    this->col = col;
-    this->row = (team == WHITE) ? 1 : 6;
+    this->file = file;
+    this->rank = (team == WHITE) ? 1 : 6;
 }
 
 bool Pawn::validateMove(int r, int c, ChessBoard* board) {
-    int rowDisplacement = r-row;
-    int colDisplacement = c-col;
+    int rowDisplacement = r-rank;
+    int colDisplacement = c-file;
 
     // check if trying to capture
     if(board->getPiece(r, c) != nullptr) {
@@ -38,7 +38,7 @@ bool Pawn::validateMove(int r, int c, ChessBoard* board) {
         // check if jumping over another piece
         if (abs(rowDisplacement) == 2) {
             int rowInc = (team == WHITE) ? 1 : -1;
-            if (board->getPiece(row + rowInc, col) != nullptr) {
+            if (board->getPiece(rank + rowInc, file) != nullptr) {
                 printf("  Invalid move, Pawn cannot jump over pieces.\n");
                 return false;
             }
@@ -46,40 +46,40 @@ bool Pawn::validateMove(int r, int c, ChessBoard* board) {
     }
 
     // propose move
-    proposedRow = r;
-    proposedCol = c;
+    proposedRank = r;
+    proposedFile = c;
 
     return true;
 }
 
 void Pawn::makeMove() {
     // check for valid move
-    if(proposedRow < 0 || proposedCol < 0) {
+    if(proposedRank < 0 || proposedFile < 0) {
         printf("Error: makeMove() attempted to make an invalid move.\n");
         exit(99);
     }
 
     // mave move
-    row = proposedRow;
-    col = proposedCol;
+    rank = proposedRank;
+    file = proposedFile;
 
     // reset proposed move
-    proposedRow = -1;
-    proposedCol = -1;
+    proposedRank = -1;
+    proposedFile = -1;
 
     hasNotMoved = false;
 }
 
-int Pawn::getRow() {
-    return row;
+int Pawn::getRank() {
+    return rank;
 }
 
-int Pawn::getCol() {
-    return col;
+int Pawn::getFile() {
+    return file;
 }
 
 void Pawn::resetValidation() {
     // reset proposed move
-    proposedRow = -1;
-    proposedCol = -1;
+    proposedRank = -1;
+    proposedFile = -1;
 }

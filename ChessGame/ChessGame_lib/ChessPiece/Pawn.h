@@ -12,17 +12,17 @@ class ChessBoard;
 class Pawn {
 protected:
     Color team;
-    int row;
-    int col;
+    int rank;
+    int file;
     bool hasNotMoved = true;
-    int proposedRow = -1;
-    int proposedCol = -1;
+    int proposedRank = -1;
+    int proposedFile = -1;
 public:
-    Pawn(Color team, int col);
+    Pawn(Color team, int file);
     bool validateMove(int r, int c, ChessBoard* board);
     void makeMove();
-    int getRow();
-    int getCol();
+    int getRank();
+    int getFile();
     void resetValidation();
 };
 

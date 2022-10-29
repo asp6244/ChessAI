@@ -8,19 +8,19 @@
 
 Knight::Knight(Color team, bool kingside) {
     this->team = team;
-    this->col = kingside ? 6 : 1;
-    this->row = (team == WHITE) ? 0 : 7;
+    this->file = kingside ? 6 : 1;
+    this->rank = (team == WHITE) ? 0 : 7;
 }
 
-Knight::Knight(Color team, int row, int col) { // pawn gets promoted
+Knight::Knight(Color team, int rank, int file) { // pawn gets promoted
     this->team = team;
-    this->row = row;
-    this->col = col;
+    this->rank = rank;
+    this->file = file;
 }
 
 bool Knight::validateMove(int r, int c) {
-    int rowDisplacement = r-row;
-    int colDisplacement = c-col;
+    int rowDisplacement = r-rank;
+    int colDisplacement = c-file;
     // check if movement is valid
     // Knight can only move in L movements
     if( !( (abs(rowDisplacement) == 2 && abs(colDisplacement) == 1) ||
@@ -30,38 +30,38 @@ bool Knight::validateMove(int r, int c) {
     }
 
     // propose move
-    proposedRow = r;
-    proposedCol = c;
+    proposedRank = r;
+    proposedFile = c;
 
     return true;
 }
 
 void Knight::makeMove() {
     // check for valid move
-    if(proposedRow < 0 || proposedCol < 0) {
+    if(proposedRank < 0 || proposedFile < 0) {
         printf("Error: makeMove() attempted to make an invalid move.\n");
         exit(99);
     }
 
     // mave move
-    row = proposedRow;
-    col = proposedCol;
+    rank = proposedRank;
+    file = proposedFile;
 
     // reset proposed move
-    proposedRow = -1;
-    proposedCol = -1;
+    proposedRank = -1;
+    proposedFile = -1;
 }
 
-int Knight::getRow() {
-    return row;
+int Knight::getRank() {
+    return rank;
 }
 
-int Knight::getCol() {
-    return col;
+int Knight::getFile() {
+    return file;
 }
 
 void Knight::resetValidation() {
     // reset proposed move
-    proposedRow = -1;
-    proposedCol = -1;
+    proposedRank = -1;
+    proposedFile = -1;
 }

@@ -13,18 +13,17 @@ class ChessBoard;
 class King {
 protected:
     Color team;
-    int row;
-    int col;
+    int rank;
+    int file;
     bool hasNotMoved = true;
-    int proposedRow = -1;
-    int proposedCol = -1;
-    Rook* castledRook = nullptr;
+    int proposedRank = -1;
+    int proposedFile = -1;
 public:
     King(Color team);
-    bool validateMove(int r, int c, ChessBoard* board);
+    bool validateMove(int r, int f, ChessBoard* board);
     void makeMove();
-    int getRow();
-    int getCol();
+    int getRank();
+    int getFile();
     void resetValidation();
 };
 

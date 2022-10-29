@@ -1,5 +1,5 @@
 
-#include "comp/GameController.h"
+#include "ChessGame/ChessGame_lib/GameController.h"
 
 int main() {
 

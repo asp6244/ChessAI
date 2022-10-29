@@ -36,23 +36,23 @@ private:
 public:
     ChessBoard(); // create a new board with new pieces
     void printBoard();
-    bool movePiece(int row, int col, int newRow, int newCol);
+    bool movePiece(int rank, int file, int newRank, int newFile);
     bool castle(Color team, bool kingside); // moves Rook to correct position for a castle
-    ChessPiece* getPiece(int row, int col);
+    ChessPiece* getPiece(int rank, int file);
     bool getCheck(Color team);
     bool getCheckmate(Color team);
     bool getStalemate();
     void printHotSquares(bool printValues);
     void destroyBoard();
 private:
-    void promotion(int row, int col);
-    void setAllHotSquares(int row, int col, bool value, bool reevaluating); // find all hot squares from a single piece
-    void setSquareHot(int id, int row, int col, bool value); // for one square to be set hot
+    void promotion(int rank, int file);
+    void setAllHotSquares(int rank, int file, bool value, bool reevaluating); // find all hot squares from a single piece
+    void setSquareHot(int id, int rank, int file, bool value); // for one square to be set hot
     void setCheck(Color team, bool checkCheckmate);
     void setCheckmate(Color team);
-    bool foundValidMove(Color team, int row, int col, ChessPiece* attacker=nullptr, int attackerIndex=-1);
+    bool foundValidMove(Color team, int rank, int file, ChessPiece* attacker=nullptr, int attackerIndex=-1);
     void setStalemate(Color team);
-    bool checkStalemateValidMove(int row, int col, int newRow, int newCol);
+    bool checkStalemateValidMove(int rank, int file, int newRank, int newFile);
 };
 
 

@@ -45,14 +45,14 @@ ChessPiece::ChessPiece(PieceType type, Color team, bool kingside, int id) {
     }
 }
 
-ChessPiece::ChessPiece(PieceType type, Color team, int col, int id) {
+ChessPiece::ChessPiece(PieceType type, Color team, int file, int id) {
     this->type = type;
     this->team = team;
     this->id = id;
 
     switch(type) {
         case PAWN:
-            pointer.pawn = new Pawn(team, col);
+            pointer.pawn = new Pawn(team, file);
             break;
         default:
             fprintf(stderr, "Error: Wrong constructor used for initializing piece [Constructor 3].\n");
@@ -60,23 +60,23 @@ ChessPiece::ChessPiece(PieceType type, Color team, int col, int id) {
     }
 }
 
-ChessPiece::ChessPiece(PieceType type, Color team, int row, int col, int id) {
+ChessPiece::ChessPiece(PieceType type, Color team, int rank, int file, int id) {
     this->type = type;
     this->team = team;
     this->id = id;
 
     switch(type) {
         case QUEEN:
-            pointer.queen = new Queen(team, row, col);
+            pointer.queen = new Queen(team, rank, file);
             break;
         case BISHOP:
-            pointer.bishop = new Bishop(team, row, col);
+            pointer.bishop = new Bishop(team, rank, file);
             break;
         case KNIGHT:
-            pointer.knight = new Knight(team, row, col);
+            pointer.knight = new Knight(team, rank, file);
             break;
         case ROOK:
-            pointer.rook = new Rook(team, row, col);
+            pointer.rook = new Rook(team, rank, file);
             break;
         default:
             fprintf(stderr, "Error: Wrong constructor used for initializing piece [Constructor 4].\n");
@@ -96,20 +96,20 @@ TypePointer ChessPiece::getPointer() {
     return pointer;
 }
 
-bool ChessPiece::validateMove(int r, int c, ChessBoard* board){
+bool ChessPiece::validateMove(int r, int f, ChessBoard* board){
     switch(type) {
         case KING:
-            return (pointer.king)->validateMove(r, c, board);
+            return (pointer.king)->validateMove(r, f, board);
         case QUEEN:
-            return (pointer.queen)->validateMove(r, c, board);
+            return (pointer.queen)->validateMove(r, f, board);
         case BISHOP:
-            return (pointer.bishop)->validateMove(r, c, board);
+            return (pointer.bishop)->validateMove(r, f, board);
         case KNIGHT:
-            return (pointer.knight)->validateMove(r, c);
+            return (pointer.knight)->validateMove(r, f);
         case ROOK:
-            return (pointer.rook)->validateMove(r, c, board);
+            return (pointer.rook)->validateMove(r, f, board);
         case PAWN:
-            return (pointer.pawn)->validateMove(r, c, board);
+            return (pointer.pawn)->validateMove(r, f, board);
         default:
             fprintf(stderr, "Error: piece has no type [move()].\n");
             exit(99);
@@ -142,42 +142,42 @@ void ChessPiece::makeMove() {
     }
 }
 
-int ChessPiece::getRow() {
+int ChessPiece::getRank() {
     switch(type) {
         case KING:
-            return (pointer.king)->getRow();
+            return (pointer.king)->getRank();
         case QUEEN:
-            return (pointer.queen)->getRow();
+            return (pointer.queen)->getRank();
         case BISHOP:
-            return (pointer.bishop)->getRow();
+            return (pointer.bishop)->getRank();
         case KNIGHT:
-            return (pointer.knight)->getRow();
+            return (pointer.knight)->getRank();
         case ROOK:
-            return (pointer.rook)->getRow();
+            return (pointer.rook)->getRank();
         case PAWN:
-            return (pointer.pawn)->getRow();
+            return (pointer.pawn)->getRank();
         default:
-            fprintf(stderr, "Error: piece has no type [getRow()].\n");
+            fprintf(stderr, "Error: piece has no type [getRank()].\n");
             exit(99);
     }
 }
 
-int ChessPiece::getCol() {
+int ChessPiece::getFile() {
     switch(type) {
         case KING:
-            return (pointer.king)->getCol();
+            return (pointer.king)->getFile();
         case QUEEN:
-            return (pointer.queen)->getCol();
+            return (pointer.queen)->getFile();
         case BISHOP:
-            return (pointer.bishop)->getCol();
+            return (pointer.bishop)->getFile();
         case KNIGHT:
-            return (pointer.knight)->getCol();
+            return (pointer.knight)->getFile();
         case ROOK:
-            return (pointer.rook)->getCol();
+            return (pointer.rook)->getFile();
         case PAWN:
-            return (pointer.pawn)->getCol();
+            return (pointer.pawn)->getFile();
         default:
-            fprintf(stderr, "Error: piece has no type [getCol()].\n");
+            fprintf(stderr, "Error: piece has no type [getFile()].\n");
             exit(99);
     }
 }

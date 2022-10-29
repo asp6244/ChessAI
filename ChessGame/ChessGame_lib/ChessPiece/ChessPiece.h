@@ -41,15 +41,15 @@ protected:
 public:
     ChessPiece(PieceType type, Color team, int id); // King, Queen
     ChessPiece(PieceType type, Color team, bool kingside, int id); // Rook, Knight, Bishop
-    ChessPiece(PieceType type, Color team, int col, int id); // Pawn
-    ChessPiece(PieceType type, Color team, int row, int col, int id); // promoted Pawn - Queen, Rook, Knight, Bishop
+    ChessPiece(PieceType type, Color team, int file, int id); // Pawn
+    ChessPiece(PieceType type, Color team, int rank, int file, int id); // promoted Pawn - Queen, Rook, Knight, Bishop
     PieceType getType();
     Color getTeam();
     TypePointer getPointer();
-    bool validateMove(int r, int c, ChessBoard* board);
+    bool validateMove(int r, int f, ChessBoard* board);
     void makeMove();
-    int getRow();
-    int getCol();
+    int getRank();
+    int getFile();
     void resetValidation();
     void pieceCaptured();
     bool getIsCaptured();

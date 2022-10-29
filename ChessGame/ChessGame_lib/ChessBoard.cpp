@@ -35,14 +35,14 @@ ChessBoard::ChessBoard() {
         board[6][i] = new ChessPiece(PAWN, BLACK, i, PAWS_START_ID + BLACK_ID_OFFSET + i);
     }
 
-    int rowIterator[4] = {0, 1, 6, 7};
-    for(int row : rowIterator) {
-        for(int col=0; col<8; col++) {
+    int rankIterator[4] = {0, 1, 6, 7};
+    for(int rank : rankIterator) {
+        for(int file=0; file<8; file++) {
             // set hot squares
-            setAllHotSquares(row, col, true, false);
+            setAllHotSquares(rank, file, true, false);
 
             // set values in pointer map
-            ChessPiece* piece = board[row][col];
+            ChessPiece* piece = board[rank][file];
             pointerMap[piece->getID()] = piece;
         }
     }
@@ -144,28 +144,28 @@ void ChessBoard::printBoard() {
     fflush(stdout);
 }
 
-bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
+bool ChessBoard::movePiece(int rank, int file, int newRank, int newFile) {
     // check if input is in bounds of board
-    if( (newRow > 7 || newRow < 0) || (newCol > 7 || newCol < 0) ) {
+    if( (newRank > 7 || newRank < 0) || (newFile > 7 || newFile < 0) ) {
         printf("  Invalid move, proposed move is not inside the board.\n");
         return false;
     }
 
-    ChessPiece* piece = board[row][col]; // get the piece to be moved
+    ChessPiece* piece = board[rank][file]; // get the piece to be moved
     // check if moved piece is a valid piece
     if(piece == nullptr) {
-        printf("  Invalid move, no piece at target square %c%d.\n", col+65, row+1);
+        printf("  Invalid move, no piece at target square %c%d.\n", file+65, rank+1);
         return false;
     }
 
     Color team = piece->getTeam();
 
-    ChessPiece* proposedMove = board[newRow][newCol]; // get the piece at the spot of the proposed move, if one exists
+    ChessPiece* proposedMove = board[newRank][newFile]; // get the piece at the spot of the proposed move, if one exists
     // check if piece at proposed move exists
     if(proposedMove != nullptr) {
         // make sure the proposed move is not an allied piece of the moved piece
         if(team == proposedMove->getTeam()) {
-            if( (row == newRow) && (col == newCol) ) {
+            if( (rank == newRank) && (file == newFile) ) {
                 printf("  Invalid move, no movement made.\n");
             } else {
                 printf("  Invalid move, proposed move is on top of an allied piece.\n");
@@ -177,43 +177,51 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     // TODO: if player is in check, move must remove check
 
     // TODO: check for valid movement
-    bool validMove = piece->validateMove(newRow, newCol, this);
+    // Also determines if move is a castle
+    bool validMove = piece->validateMove(newRank, newFile, this);
     if(!validMove) {
         return false;
+    }
+
+    // Get castle information
+    bool kingside;
+    int rookFile;
+    int newRookFile;
+    ChessPiece* rook;
+    if(castling) {
+        kingside = (newFile - file == 2);
+        rookFile = (kingside) ? 7 : 0;
+        newRookFile = (kingside) ? 5 : 3;
+        rook = board[rank][rookFile];
+
+        // Determine if castle is valid
+        validMove = rook->validateMove(rank, newRookFile, this);
+        if(!validMove) {
+            return false;
+        }
     }
 
     // TODO: remove hot squares
     // if capturing piece
     if(proposedMove != nullptr) {
         // remove hot squares from the piece that was captured
-        setAllHotSquares(newRow, newCol, false, false);
+        setAllHotSquares(newRank, newFile, false, false);
     }
 
     // unset old hot squares
-    setAllHotSquares(row, col, false, false);
-
-    bool kingside;
-    int rookCol;
-    int newRookCol;
-    ChessPiece* rook;
+    setAllHotSquares(rank, file, false, false);
     if(castling) {
-        kingside = (newCol-col == 2);
-        rookCol = (kingside) ? 7 : 0;
-
-        // unset old hot squares
-        setAllHotSquares(row, rookCol, false, false);
+        // unset old hot squares for rook
+        setAllHotSquares(rank, rookFile, false, false);
     }
 
     // TODO: make pseudo movement
-    board[newRow][newCol] = piece;
-    board[row][col] = nullptr;
+    board[newRank][newFile] = piece;
+    board[rank][file] = nullptr;
     // TODO: make pseudo castle movement
     if(castling) {
-        newRookCol = (kingside) ? 5 : 3;
-
-        rook = board[row][rookCol];
-        board[row][newRookCol] = rook;
-        board[row][rookCol] = nullptr;
+        board[rank][newRookFile] = rook;
+        board[rank][rookFile] = nullptr;
     }
 
     // TODO: reevaluate opponent hot squares
@@ -221,13 +229,13 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
     for(; i<bound; i++) {
         // old location and new location of moved piece
-        if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
+        if(hotSquares[rank][file][i] || hotSquares[newRank][newFile][i]) {
             // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
             ChessPiece* pieceToEvaluate = pointerMap[i];
             PieceType type = pieceToEvaluate->getType();
             if(type == QUEEN || type == BISHOP || type == ROOK) {
                 // reevaluate the hot squares for the pieces that were making the old and new location hot
-                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, true);
                 // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
             }
         }
@@ -244,20 +252,20 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
 
 
         // set back the moved pieces into their original locations
-        board[row][col] = piece;
-        board[newRow][newCol] = proposedMove;
+        board[rank][file] = piece;
+        board[newRank][newFile] = proposedMove;
         if(castling) {
-            board[row][newRookCol] = nullptr;
-            board[row][rookCol] = rook;
+            board[rank][newRookFile] = nullptr;
+            board[rank][rookFile] = rook;
         }
 
         // set hot squares back
         if(proposedMove != nullptr) {
-            setAllHotSquares(newRow, newCol, true, false); // captured piece
+            setAllHotSquares(newRank, newFile, true, false); // captured piece
         }
-        setAllHotSquares(row, col, true, false); // moved piece
+        setAllHotSquares(rank, file, true, false); // moved piece
         if(castling) {
-            setAllHotSquares(row, rookCol, true, false);
+            setAllHotSquares(rank, rookFile, true, false);
         }
 
         // TODO: reevaluate affected pieces
@@ -265,13 +273,13 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
         i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
         for(; i<bound; i++) {
             // old location and new location of moved piece
-            if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
+            if(hotSquares[rank][file][i] || hotSquares[newRank][newFile][i]) {
                 // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
                 ChessPiece* pieceToEvaluate = pointerMap[i];
                 PieceType type = pieceToEvaluate->getType();
                 if(type == QUEEN || type == BISHOP || type == ROOK) {
                     // reevaluate the hot squares for the pieces that were making the old and new location hot
-                    setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                    setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, true);
                     // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
                 }
             }
@@ -286,9 +294,8 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
         return false;
     }
 
-
-    // TODO: if so, make move and update check, set hot squares
     // move is valid
+    // make move, update check, set hot squares
 
     // if capturing piece
     if(proposedMove != nullptr) {
@@ -312,17 +319,17 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
 
     // look for promotion from pawn
     if(piece->getType() == PAWN) {
-        Color team = piece->getTeam();
-        if((newRow == 7 && team == WHITE) || (newRow == 0 && team == BLACK)) {
-            promotion(newRow, newCol);
+        Color thisTeam = piece->getTeam();
+        if((newRank == 7 && thisTeam == WHITE) || (newRank == 0 && thisTeam == BLACK)) {
+            promotion(newRank, newFile);
         }
     }
 
     // TODO: set hot squares back
     // set new hot squares
-    setAllHotSquares(newRow, newCol, true, false);
+    setAllHotSquares(newRank, newFile, true, false);
     if(castling) {
-        setAllHotSquares(row, newRookCol, true, false);
+        setAllHotSquares(rank, newRookFile, true, false);
     }
 
     // TODO: I modified this range
@@ -330,20 +337,20 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
     i = (team == WHITE) ? 0 : BLACK_ID_OFFSET;
     for(; i<bound; i++) {
         // old location and new location of moved piece
-        if(hotSquares[row][col][i] || hotSquares[newRow][newCol][i]) {
+        if(hotSquares[rank][file][i] || hotSquares[newRank][newFile][i]) {
             // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
             ChessPiece* pieceToEvaluate = pointerMap[i];
             PieceType type = pieceToEvaluate->getType();
             if(type == QUEEN || type == BISHOP || type == ROOK) {
                 // reevaluate the hot squares for the pieces that were making the old and new location hot
-                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, true);
                 // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
             }
         }
     }
 
     // TODO: I don't think both checks need to be set again
-    // set the opponents check status, since the moving players check status has already been set
+    // set the opponents check status, since the moving player's check status has already been set
     stalemate = true; // used to determine if stalemate needs to be checked
     if(team == WHITE) {
         setCheck(BLACK, true);
@@ -369,11 +376,11 @@ bool ChessBoard::movePiece(int row, int col, int newRow, int newCol) {
 }
 
 bool ChessBoard::castle(Color team, bool kingside) {
-    int row = (team == WHITE) ? 0 : 7;
-    int rookCol = (kingside) ? 7 : 0;
+    int rank = (team == WHITE) ? 0 : 7;
+    int rookFile = (kingside) ? 7 : 0;
 
     // check if Rook piece is valid to castle
-    ChessPiece* maybeRook = board[row][rookCol];
+    ChessPiece* maybeRook = board[rank][rookFile];
     if(maybeRook == nullptr) {
         printf("  Invalid move, Rook has been moved and cannot castle.\n");
         return false;
@@ -389,59 +396,60 @@ bool ChessBoard::castle(Color team, bool kingside) {
         return false;
     }
 
-    int rookNewCol = (kingside) ? 5 : 3;
+    int rookNewFile = (kingside) ? 5 : 3;
 
     // TODO: king can't move through check : validate this
     // look through all black pieces for piece making the kings piece hot
     int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
     int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
     for(; i<bound; i++) {
-        if(hotSquares[row][rookNewCol][i]) {
+        if(hotSquares[rank][rookNewFile][i]) {
             printf("  Invalid move, King cannot castle through check.\n");
             return false; // check mate only occurs if check occurs
         }
     }
 
     // execute rook movement
-    if(!movePiece(row, rookCol, row, rookNewCol)) {
-        return false;
-    }
+    // TODO: this might cause a bug
+    //if(!movePiece(rank, rookFile, rank, rookNewFile)) {
+    //    return false;
+    //}
 
     // set castling boolean if valid castle
     castling = true;
     return true;
 }
 
-ChessPiece* ChessBoard::getPiece(int row, int col) {
-    return board[row][col];
+ChessPiece* ChessBoard::getPiece(int rank, int file) {
+    return board[rank][file];
 }
 
-void ChessBoard::promotion(int row, int col) {
+void ChessBoard::promotion(int rank, int file) {
     printBoard();
 
-    ChessPiece* piece = board[row][col]; // get the piece to be promoted
+    ChessPiece* piece = board[rank][file]; // get the piece to be promoted
 
     // TODO: maybe remove these checks
     // check if promoted piece is a valid piece
     if(piece == nullptr) {
-        fprintf(stderr, "Error: promoted piece is null at %c%d.\n", col + 65, row+1);
+        fprintf(stderr, "Error: promoted piece is null at %c%d.\n", file + 65, rank+1);
         exit(99);
     }
     // check if promoted piece is pawn
     if(piece->getType() != PAWN) {
-        fprintf(stderr, "Error: promoted piece is not a pawn %c%d.\n", col + 65, row+1);
+        fprintf(stderr, "Error: promoted piece is not a pawn %c%d.\n", file + 65, rank+1);
         exit(99);
     }
     // check if pawn is in correct location
     Color team = piece->getTeam();
-    if( !((team == WHITE && row == 7) || (team == BLACK && row == 0)) ) {
-        fprintf(stderr, "Error: promoted piece is not at the other side of the board at %c%d.\n", col + 65, row+1);
+    if( !((team == WHITE && rank == 7) || (team == BLACK && rank == 0)) ) {
+        fprintf(stderr, "Error: promoted piece is not at the other side of the board at %c%d.\n", file + 65, rank+1);
         exit(99);
     }
 
     // free memory of promoted pawn
-    delete board[row][col];
-    board[row][col] = nullptr;
+    delete board[rank][file];
+    board[rank][file] = nullptr;
 
     // get pawn id to copy
     int id = piece->getID();
@@ -460,22 +468,22 @@ void ChessBoard::promotion(int row, int col) {
         switch(input[0]) {
             case 'Q':
             case 'q':
-                board[row][col] = new ChessPiece(QUEEN, team, row, col, id);
+                board[rank][file] = new ChessPiece(QUEEN, team, rank, file, id);
                 valid = true;
                 break;
             case 'B':
             case 'b':
-                board[row][col] = new ChessPiece(BISHOP, team, row, col, id);
+                board[rank][file] = new ChessPiece(BISHOP, team, rank, file, id);
                 valid = true;
                 break;
             case 'N':
             case 'n':
-                board[row][col] = new ChessPiece(KNIGHT, team, row, col, id);
+                board[rank][file] = new ChessPiece(KNIGHT, team, rank, file, id);
                 valid = true;
                 break;
             case 'R':
             case 'r':
-                board[row][col] = new ChessPiece(ROOK, team, row, col, id);
+                board[rank][file] = new ChessPiece(ROOK, team, rank, file, id);
                 valid = true;
                 break;
             default:
@@ -486,8 +494,8 @@ void ChessBoard::promotion(int row, int col) {
 
 void ChessBoard::setCheck(Color team, bool checkCheckmate) {
     ChessPiece* king = pointerMap[KING_ID + ((team == WHITE) ? 0 : BLACK_ID_OFFSET)];
-    int row = king->getRow();
-    int col = king->getCol();
+    int rank = king->getRank();
+    int file = king->getFile();
 
     if(team == WHITE) {
         whiteCheck = false;
@@ -498,7 +506,7 @@ void ChessBoard::setCheck(Color team, bool checkCheckmate) {
     int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
     int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
     for(; i<bound; i++) {
-        if(hotSquares[row][col][i]) {
+        if(hotSquares[rank][file][i]) {
             if(team == WHITE) {
                 whiteCheck = true;
             } else {
@@ -534,21 +542,21 @@ void ChessBoard::setCheckmate(Color team) {
 
     // get king
     ChessPiece* king = pointerMap[KING_ID + ((team == WHITE) ? 0 : BLACK_ID_OFFSET)];
-    int row = king->getRow();
-    int col = king->getCol();
+    int rank = king->getRank();
+    int file = king->getFile();
     // create array of all adjacent square locations around the king to make iterating through them easier
     struct squareCoordinates {
-        int row;
-        int col;
+        int rank;
+        int file;
     };
-    struct squareCoordinates adjSquares[8] = {{row, col+1},
-                                              {row+1, col+1},
-                                              {row+1, col},
-                                              {row+1, col-1},
-                                              {row, col-1},
-                                              {row-1, col-1},
-                                              {row-1, col},
-                                              {row-1, col+1}};
+    struct squareCoordinates adjSquares[8] = {{rank, file+1},
+                                              {rank+1, file+1},
+                                              {rank+1, file},
+                                              {rank+1, file-1},
+                                              {rank, file-1},
+                                              {rank-1, file-1},
+                                              {rank-1, file},
+                                              {rank-1, file+1}};
 
     // for each adjacent square
     bool hot;
@@ -556,10 +564,10 @@ void ChessBoard::setCheckmate(Color team) {
     for(struct squareCoordinates adjSquare : adjSquares) {
         hot = false;
         // if inside the board
-        if( (adjSquare.row >= 0 && adjSquare.row < 8) && (adjSquare.col >=0 && adjSquare.col < 8) ) {
+        if( (adjSquare.rank >= 0 && adjSquare.rank < 8) && (adjSquare.file >=0 && adjSquare.file < 8) ) {
             // if not occupied by an ally
-            if(board[adjSquare.row][adjSquare.col] != nullptr) {
-                if(board[adjSquare.row][adjSquare.col]->getTeam() == team) {
+            if(board[adjSquare.rank][adjSquare.file] != nullptr) {
+                if(board[adjSquare.rank][adjSquare.file]->getTeam() == team) {
                     hot = true;
                 }
             }
@@ -569,7 +577,7 @@ void ChessBoard::setCheckmate(Color team) {
                 int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
                 for(; i<opponentBound; i++) {
                     // check if adjacent piece is hot from specific opponent piece
-                    if(hotSquares[adjSquare.row][adjSquare.col][i]) {
+                    if(hotSquares[adjSquare.rank][adjSquare.file][i]) {
                         hot = true;
                         break;
                     }
@@ -600,7 +608,7 @@ void ChessBoard::setCheckmate(Color team) {
     {
         int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
         for(; i<opponentBound; i++) {
-            if(hotSquares[row][col][i]) {
+            if(hotSquares[rank][file][i]) {
                 numHot++;
                 attacker = pointerMap[i];
                 attackerIndex = i;
@@ -619,10 +627,10 @@ void ChessBoard::setCheckmate(Color team) {
         // if king square is hot from only one piece, must capture or block that piece, since king cannot move adjacently
         // iterate through pieces making the attacking piece hot,
 
-        int attackerRow = attacker->getRow();
-        int attackerCol = attacker->getCol();
+        int attackerRank = attacker->getRank();
+        int attackerFile = attacker->getFile();
 
-        if(foundValidMove(team, attackerRow, attackerCol, attacker, attackerIndex)) {
+        if(foundValidMove(team, attackerRank, attackerFile, attacker, attackerIndex)) {
             stalemate = false;
             return;
         }
@@ -631,42 +639,42 @@ void ChessBoard::setCheckmate(Color team) {
         //   (only if the attacking piece is queen, rook, or bishop since they are the only pieces that can be blocked)
         PieceType type = attacker->getType();
         if(type == QUEEN || type == BISHOP || type == ROOK) {
-            int rowDisplacement = row - attackerRow;
-            int colDisplacement = col - attackerCol;
+            int rankDisplacement = rank - attackerRank;
+            int fileDisplacement = file - attackerFile;
 
             // check if jumping over another piece
-            if(rowDisplacement == 0) { // attacking horizontally
-                int i = (colDisplacement > 0) ? attackerCol+1 : attackerCol-1; // starting position for the loop, left or right 1
-                int inc = (colDisplacement > 0) ? 1 : -1; // increment left or right
+            if(rankDisplacement == 0) { // attacking horizontally
+                int i = (fileDisplacement > 0) ? attackerFile+1 : attackerFile-1; // starting position for the loop, left or right 1
+                int inc = (fileDisplacement > 0) ? 1 : -1; // increment left or right
 
-                for(; i!=col; i+=inc) { // iterate through available spaces
-                    if(foundValidMove(team, row, i)) {
+                for(; i!=file; i+=inc) { // iterate through available spaces
+                    if(foundValidMove(team, rank, i)) {
                         stalemate = false;
                         return;
                     }
                 }
-            } else if(colDisplacement == 0) { // attacking vertically
-                int i = (rowDisplacement > 0) ? attackerRow+1 : attackerRow-1; // starting position for the loop, up or down 1
-                int inc = (rowDisplacement > 0) ? 1 : -1; // increment up or down
+            } else if(fileDisplacement == 0) { // attacking vertically
+                int i = (rankDisplacement > 0) ? attackerRank+1 : attackerRank-1; // starting position for the loop, up or down 1
+                int inc = (rankDisplacement > 0) ? 1 : -1; // increment up or down
 
-                for(; i!=row; i+=inc) { // iterate through available spaces
-                    if(foundValidMove(team, i, col)) {
+                for(; i!=rank; i+=inc) { // iterate through available spaces
+                    if(foundValidMove(team, i, file)) {
                         stalemate = false;
                         return;
                     }
                 }
             } else { // attacking diagonally
-                // incrementer for row and column
-                int rowInc = (rowDisplacement > 0) ? 1 : -1; // moving up or down
-                int colInc = (colDisplacement > 0) ? 1 : -1; // moving right or left
+                // incrementer for rank and file
+                int rankInc = (rankDisplacement > 0) ? 1 : -1; // moving up or down
+                int fileInc = (fileDisplacement > 0) ? 1 : -1; // moving right or left
 
-                int j = attackerCol+colInc; // set initial row and column
-                for(int i = attackerRow+rowInc; i!=row; i+=rowInc) { // iterate through available spaces
+                int j = attackerFile+fileInc; // set initial rank and file
+                for(int i = attackerRank+rankInc; i!=rank; i+=rankInc) { // iterate through available spaces
                     if(foundValidMove(team, i, j)) {
                         stalemate = false;
                         return;
                     }
-                    j+=colInc; // increment row and column
+                    j+=fileInc; // increment rank and file
                 }
             }
         }
@@ -678,7 +686,7 @@ void ChessBoard::setCheckmate(Color team) {
             blackCheckMate = true;
         }
 
-        // if checkmate, then stalemate is false
+        // if checkmated, then stalemate is false
         stalemate = false;
     } else {
         fprintf(stderr, "Error: attacker is nullptr [setCheckmate].\n");
@@ -686,30 +694,30 @@ void ChessBoard::setCheckmate(Color team) {
     }
 }
 
-// TODO; determine if an allied piece can be moved to the specified row/column
+// TODO; determine if an allied piece can be moved to the specified rank/file
 // TODO: iterate through allied pieces making the specified square hot
     // TODO: for each, make a pseudo movement and reevaluate pieces making that piece hot
     // TODO: check to see if the king will enter check from another piece (that is not the attacking piece) after movement
     // TODO: if king enters check from another piece after movement, reset and reevaluate, skip that iteration
     // TODO: else, return true
 // attacker and attackerIndex will be nullptr and -1 if the requested move will not capture an opponent piece
-bool ChessBoard::foundValidMove(Color team, int row, int col, ChessPiece* attacker, int attackerIndex) {
+bool ChessBoard::foundValidMove(Color team, int rank, int file, ChessPiece* attacker, int attackerIndex) {
     int i = (team == WHITE) ? 0 : BLACK_ID_OFFSET;
     int alliedBound = (team == WHITE) ? BLACK_ID_OFFSET : 32;
     for(; i<alliedBound; i++) {
-        if(hotSquares[row][col][i]) {
+        if(hotSquares[rank][file][i]) {
 
             // make pseudo movement
             ChessPiece* attackingAttacker = pointerMap[i];
-            int attackingAttackerRow = attackingAttacker->getRow();
-            int attackingAttackerCol = attackingAttacker->getCol();
+            int attackingAttackerRank = attackingAttacker->getRank();
+            int attackingAttackerFile = attackingAttacker->getFile();
 
-            board[row][col] = attackingAttacker;
-            board[attackingAttackerRow][attackingAttackerCol] = nullptr;
+            board[rank][file] = attackingAttacker;
+            board[attackingAttackerRank][attackingAttackerFile] = nullptr;
 
             // remove hot squares from the piece that was captured
             if(attacker != nullptr) {
-                setAllHotSquares(row, col, false, false);
+                setAllHotSquares(rank, file, false, false);
             }
 
             // reevaluate opponent pieces attacking allied piece attacking attacker (that are not the attacking piece)
@@ -718,14 +726,14 @@ bool ChessBoard::foundValidMove(Color team, int row, int col, ChessPiece* attack
                 int j = (team == WHITE) ? BLACK_ID_OFFSET : 0;
                 for(; j < opponentBound; j++) {
                     // old location of moved piece
-                    if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
+                    if(hotSquares[attackingAttackerRank][attackingAttackerFile][j] && attackerIndex != j) {
                         // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
                         ChessPiece *pieceToEvaluate = pointerMap[j];
                         PieceType type = pieceToEvaluate->getType();
                         if(type == QUEEN || type == BISHOP || type == ROOK) {
                             // reevaluate the hot squares for the pieces that were making the old location hot
                             // reevaluating is false because movement cannot block a piece that was not already blocked
-                            setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+                            setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, false);
                         }
                     }
                 }
@@ -735,12 +743,12 @@ bool ChessBoard::foundValidMove(Color team, int row, int col, ChessPiece* attack
             setCheck(team, false);
 
             // set back the moved pieces into their original locations
-            board[attackingAttackerRow][attackingAttackerCol] = attackingAttacker;
-            board[row][col] = attacker;
+            board[attackingAttackerRank][attackingAttackerFile] = attackingAttacker;
+            board[rank][file] = attacker;
 
             // set hot squares back
             if(attacker != nullptr) {
-                setAllHotSquares(row, col, true, false); // captured piece
+                setAllHotSquares(rank, file, true, false); // captured piece
             }
 
             // re-reevaluate opponent pieces attacking allied piece attacking attacker (that are not the attacking piece)
@@ -748,14 +756,14 @@ bool ChessBoard::foundValidMove(Color team, int row, int col, ChessPiece* attack
                 int j = (team == WHITE) ? BLACK_ID_OFFSET : 0;
                 for(; j < opponentBound; j++) {
                     // old location of moved piece
-                    if(hotSquares[attackingAttackerRow][attackingAttackerCol][j] && attackerIndex != j) {
+                    if(hotSquares[attackingAttackerRank][attackingAttackerFile][j] && attackerIndex != j) {
                         // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
                         ChessPiece *pieceToEvaluate = pointerMap[j];
                         PieceType type = pieceToEvaluate->getType();
                         if(type == QUEEN || type == BISHOP || type == ROOK) {
                             // reevaluate the hot squares for the pieces that were making the old location hot
                             // reevaluating is false because movement cannot block a piece that was not already blocked
-                            setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, false);
+                            setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, false);
                         }
                     }
                 }
@@ -790,7 +798,7 @@ bool ChessBoard::getCheckmate(Color team) {
         // TODO: iterate through available movements based on piece type
         //   For queen, rook, and bishop, only check for adjacent movements, since all other ones are just extra steps
             // TODO: for each, ensure move is in the board and not on top of an allied piece
-            // TODO: make pseudo movement, reevalute opponent pieces that make the moved square hot.
+            // TODO: make pseudo movement, reevaluate opponent pieces that make the moved square hot.
             // TODO: If king becomes hot, reset pseudo movement and reevaluation, skip iteration
                 // TODO: if king does not become hot, move is valid; set stalemate to false, return
     // TODO: if iterated through all movements from all pieces on the board, no valid moves exist
@@ -820,8 +828,8 @@ void ChessBoard::setStalemate(Color team) {
     for(int id : piece_order) {
         ChessPiece* piece = pointerMap[id];
         if(!piece->getIsCaptured()) {
-            int row = piece->getRow();
-            int col = piece->getCol();
+            int rank = piece->getRank();
+            int file = piece->getFile();
             PieceType type = piece->getType();
 
             // set squares hot based on piece type
@@ -830,10 +838,10 @@ void ChessBoard::setStalemate(Color team) {
                 case KING:
                 case QUEEN:
                 case BISHOP:
-                    if(checkStalemateValidMove(row, col, row+1, col+1) ||
-                       checkStalemateValidMove(row, col, row+1, col-1) ||
-                       checkStalemateValidMove(row, col, row-1, col+1) ||
-                       checkStalemateValidMove(row, col, row-1, col-1)) {
+                    if(checkStalemateValidMove(rank, file, rank+1, file+1) ||
+                       checkStalemateValidMove(rank, file, rank+1, file-1) ||
+                       checkStalemateValidMove(rank, file, rank-1, file+1) ||
+                       checkStalemateValidMove(rank, file, rank-1, file-1)) {
                         stalemate = false;
                         return;
                     }
@@ -843,10 +851,10 @@ void ChessBoard::setStalemate(Color team) {
                         break;
                     }
                 case ROOK:
-                    if(checkStalemateValidMove(row, col, row+1, col) ||
-                       checkStalemateValidMove(row, col, row-1, col) ||
-                       checkStalemateValidMove(row, col, row, col+1) ||
-                       checkStalemateValidMove(row, col, row, col-1)) {
+                    if(checkStalemateValidMove(rank, file, rank+1, file) ||
+                       checkStalemateValidMove(rank, file, rank-1, file) ||
+                       checkStalemateValidMove(rank, file, rank, file+1) ||
+                       checkStalemateValidMove(rank, file, rank, file-1)) {
                         stalemate = false;
                         return;
                     }
@@ -856,7 +864,7 @@ void ChessBoard::setStalemate(Color team) {
                         int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
                         int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
                         for(; i<bound; i++) {
-                            if(hotSquares[row][col][i]) {
+                            if(hotSquares[rank][file][i]) {
                                 // this should theoretically never be reached because
                                 // this condition is checked when checkmate is checked
                                 stalemate = false;
@@ -867,14 +875,14 @@ void ChessBoard::setStalemate(Color team) {
 
                     break;
                 case KNIGHT:
-                    if(checkStalemateValidMove(row, col, row+1, col+2) ||
-                       checkStalemateValidMove(row, col, row+2, col+1) ||
-                       checkStalemateValidMove(row, col, row+2, col-1) ||
-                       checkStalemateValidMove(row, col, row+1, col-2) ||
-                       checkStalemateValidMove(row, col, row-1, col-2) ||
-                       checkStalemateValidMove(row, col, row-2, col-1) ||
-                       checkStalemateValidMove(row, col, row-2, col+1) ||
-                       checkStalemateValidMove(row, col, row-1, col+2)) {
+                    if(checkStalemateValidMove(rank, file, rank+1, file+2) ||
+                       checkStalemateValidMove(rank, file, rank+2, file+1) ||
+                       checkStalemateValidMove(rank, file, rank+2, file-1) ||
+                       checkStalemateValidMove(rank, file, rank+1, file-2) ||
+                       checkStalemateValidMove(rank, file, rank-1, file-2) ||
+                       checkStalemateValidMove(rank, file, rank-2, file-1) ||
+                       checkStalemateValidMove(rank, file, rank-2, file+1) ||
+                       checkStalemateValidMove(rank, file, rank-1, file+2)) {
                         stalemate = false;
                         return;
                     }
@@ -882,14 +890,14 @@ void ChessBoard::setStalemate(Color team) {
                     break;
                 case PAWN:
                     if(team == WHITE) {
-                        if(checkStalemateValidMove(row, col, row+1, col+1) ||
-                           checkStalemateValidMove(row, col, row+1, col-1)) {
+                        if(checkStalemateValidMove(rank, file, rank+1, file+1) ||
+                           checkStalemateValidMove(rank, file, rank+1, file-1)) {
                             stalemate = false;
                             return;
                         }
                     } else {
-                        if(checkStalemateValidMove(row, col, row-1, col+1) ||
-                           checkStalemateValidMove(row, col, row-1, col-1)) {
+                        if(checkStalemateValidMove(rank, file, rank-1, file+1) ||
+                           checkStalemateValidMove(rank, file, rank-1, file-1)) {
                             stalemate = false;
                             return;
                         }
@@ -906,15 +914,15 @@ void ChessBoard::setStalemate(Color team) {
     stalemate = true;
 }
 
-bool ChessBoard::checkStalemateValidMove(int row, int col, int newRow, int newCol) {
+bool ChessBoard::checkStalemateValidMove(int rank, int file, int newRank, int newFile) {
     // ensure move is inside the board
-    if(newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8) {
+    if(newRank < 0 || newRank >= 8 || newFile < 0 || newFile >= 8) {
         return false;
     }
 
-    ChessPiece* piece = board[row][col];
+    ChessPiece* piece = board[rank][file];
     Color team = piece->getTeam();
-    ChessPiece* attackedPiece = board[newRow][newCol];
+    ChessPiece* attackedPiece = board[newRank][newFile];
 
     // ensure piece is not on top of an allied piece
     if(attackedPiece != nullptr) {
@@ -924,21 +932,21 @@ bool ChessBoard::checkStalemateValidMove(int row, int col, int newRow, int newCo
     }
 
     // make pseudo movement
-    board[row][col] = nullptr;
-    board[newRow][newCol] = piece;
+    board[rank][file] = nullptr;
+    board[newRank][newFile] = piece;
 
     // reevaluate opponent pieces that make the moved square hot
     int i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
     int bound = (team == WHITE) ? 32 : BLACK_ID_OFFSET;
     for(; i<bound; i++) {
         // old location of moved piece
-        if(hotSquares[row][col][i]) { // TODO: hotSquares[newRow][newCol][i] verify this does not need to be checked with unit testing
+        if(hotSquares[rank][file][i]) { // TODO: hotSquares[newRank][newFile][i] verify this does not need to be checked with unit testing
             // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
             ChessPiece* pieceToEvaluate = pointerMap[i];
             PieceType type = pieceToEvaluate->getType();
             if(type == QUEEN || type == BISHOP || type == ROOK) {
                 // reevaluate the hot squares for the pieces that were making and new location hot
-                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, true);
                 // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
             }
         }
@@ -946,32 +954,32 @@ bool ChessBoard::checkStalemateValidMove(int row, int col, int newRow, int newCo
 
     // if king does not become hot, move is valid
     ChessPiece* king = pointerMap[KING_ID + ((team == WHITE) ? 0 : BLACK_ID_OFFSET)];
-    int kingRow = king->getRow();
-    int kingCol = king->getCol();
+    int kingRank = king->getRank();
+    int kingFile = king->getFile();
     i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
     bool hot = false;
     for(; i<bound; i++) {
-        if(hotSquares[kingRow][kingCol][i]) {
+        if(hotSquares[kingRank][kingFile][i]) {
             hot = true;
             break;
         }
     }
 
     // reset pseudo movement
-    board[row][col] = piece;
-    board[newRow][newCol] = attackedPiece;
+    board[rank][file] = piece;
+    board[newRank][newFile] = attackedPiece;
 
     // reset reevaluation of opponent pieces that make the moved square hot
     i = (team == WHITE) ? BLACK_ID_OFFSET : 0;
     for(; i<bound; i++) {
         // old location of moved piece
-        if(hotSquares[row][col][i]) { // TODO: hotSquares[newRow][newCol][i] verify this does not need to be checked with unit testing
+        if(hotSquares[rank][file][i]) { // TODO: hotSquares[newRank][newFile][i] verify this does not need to be checked with unit testing
             // only need to reevaluate hot squares for pieces that can be blocked by an opponent: Queen, Bishop, Rook
             ChessPiece* pieceToEvaluate = pointerMap[i];
             PieceType type = pieceToEvaluate->getType();
             if(type == QUEEN || type == BISHOP || type == ROOK) {
                 // reevaluate the hot squares for the pieces that were making the old location hot
-                setAllHotSquares(pieceToEvaluate->getRow(), pieceToEvaluate->getCol(), true, true);
+                setAllHotSquares(pieceToEvaluate->getRank(), pieceToEvaluate->getFile(), true, true);
                 // only true when not castling, since in a castle the king and rook are not blocking any pieces from seeing the king
             }
         }
@@ -984,10 +992,10 @@ bool ChessBoard::getStalemate() {
     return stalemate;
 }
 
-void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluating) {
-    ChessPiece* piece = board[row][col];
+void ChessBoard::setAllHotSquares(int rank, int file, bool value, bool reevaluating) {
+    ChessPiece* piece = board[rank][file];
     if(piece == nullptr) {
-        fprintf(stderr, "Error: piece to set hot is null at %c%d.\n", col + 65, row+1);
+        fprintf(stderr, "Error: piece to set hot is null at %c%d.\n", file + 65, rank+1);
         exit(99);
     }
 
@@ -999,31 +1007,31 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
     // TODO: consider moving these to the respective piece objects
     switch(type) {
         case KING:
-            setSquareHot(id, row, col+1, value);
-            setSquareHot(id, row+1, col+1, value);
-            setSquareHot(id, row+1, col, value);
-            setSquareHot(id, row+1, col-1, value);
-            setSquareHot(id, row, col-1, value);
-            setSquareHot(id, row-1, col-1, value);
-            setSquareHot(id, row-1, col, value);
-            setSquareHot(id, row-1, col+1, value);
+            setSquareHot(id, rank, file+1, value);
+            setSquareHot(id, rank+1, file+1, value);
+            setSquareHot(id, rank+1, file, value);
+            setSquareHot(id, rank+1, file-1, value);
+            setSquareHot(id, rank, file-1, value);
+            setSquareHot(id, rank-1, file-1, value);
+            setSquareHot(id, rank-1, file, value);
+            setSquareHot(id, rank-1, file+1, value);
             break;
         case QUEEN:
         case BISHOP: {
-            int incrementor[4][2] = {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}}; // incrementor for row and column
+            int incrementor[4][2] = {{1, 1}, {1, -1}, {-1, -1}, {-1, 1}}; // incrementor for rank and file
             int boundaries[4][2] = {{8, 8}, {8, -1}, {-1, -1}, {-1, 8}}; // boundaries for the board
-            int rowInc, colInc, rowBound, colBound;
+            int rankInc, fileInc, rankBound, fileBound;
             bool pathBlocked; // used to determine when a piece is blocking the path of the checked piece
 
             // loop through all four directions that must be checked
             for(int i=0; i<4; i++) {
-                rowInc = incrementor[i][0];
-                colInc = incrementor[i][1];
-                rowBound = boundaries[i][0];
-                colBound = boundaries[i][1];
+                rankInc = incrementor[i][0];
+                fileInc = incrementor[i][1];
+                rankBound = boundaries[i][0];
+                fileBound = boundaries[i][1];
                 pathBlocked = false;
 
-                for(int r = row+rowInc, c = col+colInc; r != rowBound && c != colBound; r += rowInc, c += colInc) {
+                for(int r = rank+rankInc, c = file+fileInc; r != rankBound && c != fileBound; r += rankInc, c += fileInc) {
                     if(!pathBlocked) {
                         hotSquares[r][c][id] = value;
                         if(board[r][c] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
@@ -1056,59 +1064,59 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
                 bound = i==0 ? 8 : -1;
 
                 pathBlocked = false;
-                for(int r = row + inc; r != bound; r += inc) {
+                for(int r = rank + inc; r != bound; r += inc) {
                     if(!pathBlocked) {
-                        hotSquares[r][col][id] = value;
-                        if(board[r][col] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
+                        hotSquares[r][file][id] = value;
+                        if(board[r][file] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
                             pathBlocked = true;
                         }
                     } else if(reevaluating) {
                         // ensure that all squares in the direction of the path after being blocked are set to false
                         // only needs to happen when reevaluating is true because this is only used when a piece has moved and
                         // all squares that made the old piece hot are being re-evaluated
-                        if(!hotSquares[r][col][id]) {
+                        if(!hotSquares[r][file][id]) {
                             break;
                         }
-                        hotSquares[r][col][id] = false;
+                        hotSquares[r][file][id] = false;
                     }
                 }
 
                 pathBlocked = false; // reset to false for new direction
-                for(int c = col + inc; c != bound; c += inc) {
+                for(int c = file + inc; c != bound; c += inc) {
                     if(!pathBlocked) {
-                        hotSquares[row][c][id] = value;
-                        if(board[row][c] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
+                        hotSquares[rank][c][id] = value;
+                        if(board[rank][c] != nullptr) { // if statement succeeds setSquareHot to set hot the square with a piece on it
                             pathBlocked = true;
                         }
                     } else if(reevaluating) {
                         // ensure that all squares in the direction of the path after being blocked are set to false
                         // only needs to happen when reevaluating is true because this is only used when a piece has moved and
                         // all squares that made the old piece hot are being re-evaluated
-                        if(!hotSquares[row][c][id]) {
+                        if(!hotSquares[rank][c][id]) {
                             break;
                         }
-                        hotSquares[row][c][id] = false;
+                        hotSquares[rank][c][id] = false;
                     }
                 }
             }
             break;
         case KNIGHT:
-            setSquareHot(id, row+1, col+2, value);
-            setSquareHot(id, row+2, col+1, value);
-            setSquareHot(id, row+2, col-1, value);
-            setSquareHot(id, row+1, col-2, value);
-            setSquareHot(id, row-1, col-2, value);
-            setSquareHot(id, row-2, col-1, value);
-            setSquareHot(id, row-2, col+1, value);
-            setSquareHot(id, row-1, col+2, value);
+            setSquareHot(id, rank+1, file+2, value);
+            setSquareHot(id, rank+2, file+1, value);
+            setSquareHot(id, rank+2, file-1, value);
+            setSquareHot(id, rank+1, file-2, value);
+            setSquareHot(id, rank-1, file-2, value);
+            setSquareHot(id, rank-2, file-1, value);
+            setSquareHot(id, rank-2, file+1, value);
+            setSquareHot(id, rank-1, file+2, value);
             break;
         case PAWN:
             if(team == WHITE) {
-                setSquareHot(id, row+1, col+1, value);
-                setSquareHot(id, row+1, col-1, value);
+                setSquareHot(id, rank+1, file+1, value);
+                setSquareHot(id, rank+1, file-1, value);
             } else {
-                setSquareHot(id, row-1, col+1, value);
-                setSquareHot(id, row-1, col-1, value);
+                setSquareHot(id, rank-1, file+1, value);
+                setSquareHot(id, rank-1, file-1, value);
             }
             break;
         default:
@@ -1117,10 +1125,10 @@ void ChessBoard::setAllHotSquares(int row, int col, bool value, bool reevaluatin
     }
 }
 
-void ChessBoard::setSquareHot(int id, int row, int col, bool value) {
+void ChessBoard::setSquareHot(int id, int rank, int file, bool value) {
     // TODO : maybe make this a DEFINE
-    if((row >= 0 && row < 8) && (col >= 0 && col < 8)) {
-        hotSquares[row][col][id] = value;
+    if((rank >= 0 && rank < 8) && (file >= 0 && file < 8)) {
+        hotSquares[rank][file][id] = value;
     }
 }
 
@@ -1130,7 +1138,7 @@ void ChessBoard::printHotSquares(bool printValues) {
     if(printValues) {
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-                printf("Row: %d    Col: %d\n", i, j);
+                printf("Rank: %d    File: %d\n", i, j);
                 printf("    White:    Black:\n");
                 for(int k = 0; k < 16; k++) {
                     if(k<=9) {

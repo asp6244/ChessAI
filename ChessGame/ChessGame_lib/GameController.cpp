@@ -23,7 +23,7 @@ GameController::GameController() {
                "  Sample input:  A2 A3  or  g8 h6\n", whoseTurnString);
         std::string input;
 
-        int row, col, newRow, newCol;
+        int rank, file, newRank, newFile;
 
         // get the integer coordinates from the correct player
         bool valid;
@@ -31,6 +31,7 @@ GameController::GameController() {
             printf(">> ");
             // get input
             std::getline(std::cin, input);
+            printf("%s\n", input.c_str());
 
             // check for resignation
             if(input == "resign") {
@@ -43,7 +44,7 @@ GameController::GameController() {
             valid = true;
             // parse input
             for(int i=0; i<input.length(); i++ ) {
-                if(input[i] != ' ') {
+                if(input[i] != ' ' && input[i] != 0xD) {
                     if(validChars == 4) {
                         printf("  Invalid input.\n");
                         valid = false;
@@ -65,17 +66,17 @@ GameController::GameController() {
 
             if(valid) {
                 // format input
-                row = (compoundLocation[1] - 48) - 1;
-                col = (compoundLocation[0] >= 97) ? compoundLocation[0] - 97 : compoundLocation[0] - 65;
-                newRow = (compoundLocation[3] - 48) - 1;
-                newCol = (compoundLocation[2] >= 97) ? compoundLocation[2] - 97 : compoundLocation[2] - 65;
+                rank = (compoundLocation[1] - 48) - 1;
+                file = (compoundLocation[0] >= 97) ? compoundLocation[0] - 97 : compoundLocation[0] - 65;
+                newRank = (compoundLocation[3] - 48) - 1;
+                newFile = (compoundLocation[2] >= 97) ? compoundLocation[2] - 97 : compoundLocation[2] - 65;
 
                 // check for validity
-                if(board.getPiece(row, col) == nullptr) {
+                if(board.getPiece(rank, file) == nullptr) {
                     printf("  Invalid move. No piece exists at the given coordinates.\n");
                     valid = false;
                 } else {
-                    valid = board.getPiece(row, col)->getTeam() == whoseTurn;
+                    valid = board.getPiece(rank, file)->getTeam() == whoseTurn;
 
                     if (!valid) {
                         printf("  It's %s's turn. Only a %s piece can move.\n",
@@ -85,7 +86,7 @@ GameController::GameController() {
 
                 // make move
                 if(valid) {
-                    valid = board.movePiece(row, col, newRow, newCol);
+                    valid = board.movePiece(rank, file, newRank, newFile);
                 }
             }
         } while(!valid);

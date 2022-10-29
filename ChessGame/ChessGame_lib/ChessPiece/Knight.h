@@ -10,17 +10,17 @@
 class Knight {
 protected:
     Color team;
-    int row;
-    int col;
-    int proposedRow = -1;
-    int proposedCol = -1;
+    int rank;
+    int file;
+    int proposedRank = -1;
+    int proposedFile = -1;
 public:
     Knight(Color team, bool kingside);
-    Knight(Color team, int row, int col); // Pawn gets promoted
+    Knight(Color team, int rank, int file); // Pawn gets promoted
     bool validateMove(int r, int c);
     void makeMove();
-    int getRow();
-    int getCol();
+    int getRank();
+    int getFile();
     void resetValidation();
 };
 

@@ -12,19 +12,19 @@ class ChessBoard;
 class Rook {
 protected:
     Color team;
-    int row;
-    int col;
+    int rank;
+    int file;
     bool hasNotMoved = true;
-    int proposedRow = -1;
-    int proposedCol = -1;
+    int proposedRank = -1;
+    int proposedFile = -1;
 public:
     Rook(Color team, bool kingside);
-    Rook(Color team, int row, int col); // Pawn gets promoted
-    bool validateMove(int r, int c, ChessBoard* board);
+    Rook(Color team, int rank, int file); // Pawn gets promoted
+    bool validateMove(int r, int f, ChessBoard* board);
     void makeMove();
     bool getHasNotMoved();
-    int getRow();
-    int getCol();
+    int getRank();
+    int getFile();
     void resetValidation();
 };
 

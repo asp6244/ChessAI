@@ -13,17 +13,17 @@ enum Color;
 class Bishop {
 protected:
     Color team;
-    int row;
-    int col;
-    int proposedRow = -1;
-    int proposedCol = -1;
+    int rank;
+    int file;
+    int proposedRank = -1;
+    int proposedFile = -1;
 public:
     Bishop(Color team, bool kingside);
-    Bishop(Color team, int row, int col); // Pawn gets promoted
+    Bishop(Color team, int rank, int file); // Pawn gets promoted
     bool validateMove(int r, int c, ChessBoard* board);
     void makeMove();
-    int getRow();
-    int getCol();
+    int getRank();
+    int getFile();
     void resetValidation();
 };
 

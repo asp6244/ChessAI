@@ -9,27 +9,27 @@
 
 King::King(Color team) {
     this->team = team;
-    this->col = 4;
-    this->row = (team == WHITE) ? 0 : 7;
+    this->file = 4;
+    this->rank = (team == WHITE) ? 0 : 7;
 }
 
-bool King::validateMove(int r, int c, ChessBoard *board) {
+bool King::validateMove(int r, int f, ChessBoard *board) {
     // TODO: this can be simplified by using the array of hot squares from ChessBoard
 
-    int rowDisplacement = r-row;
-    int colDisplacement = c-col;
+    int rankDisplacement = r-rank;
+    int fileDisplacement = f-file;
     // check if movement is valid
     // King can only move a single tile adjacently
-    if( (abs(rowDisplacement) > 1 || abs(colDisplacement) > 1) &&
-        !(((team == WHITE && row == 0) || (team == BLACK && row == 7)) && (col == 4 || col == 3) &&
-          (abs(colDisplacement) == 2 && rowDisplacement == 0)) ) { // castle condition
+    if( (abs(rankDisplacement) > 1 || abs(fileDisplacement) > 1) &&
+        !(((team == WHITE && rank == 0) || (team == BLACK && rank == 7)) && (file == 4 || file == 3) &&
+          (abs(fileDisplacement) == 2 && rankDisplacement == 0)) ) { // castle condition
         printf("  Invalid move, King can only move a single tile adjacently.\n");
         return false;
     }
 
     // check for castle
-    if(((team == WHITE && row == 0) || (team == BLACK && row == 7)) && (col == 4 || col == 3) &&
-       (abs(colDisplacement) == 2 && rowDisplacement == 0)) {
+    if(((team == WHITE && rank == 0) || (team == BLACK && rank == 7)) && (file == 4 || file == 3) &&
+       (abs(fileDisplacement) == 2 && rankDisplacement == 0)) {
         if(!hasNotMoved) {
             printf("  Invalid move, castle condition not met; King cannot have moved in order to castle.\n");
             return false;
@@ -40,11 +40,11 @@ bool King::validateMove(int r, int c, ChessBoard *board) {
             return false;
         }
 
-        bool kingside = (colDisplacement == 2);
+        bool kingside = (fileDisplacement == 2);
 
         // check for taking a piece or jumping over a piece
-        if( (board->getPiece(r, c) != nullptr) || ((kingside && board->getPiece(row, col+1) != nullptr) ||
-          (!kingside && board->getPiece(row, col-1) != nullptr)) ) {
+        if( (board->getPiece(r, f) != nullptr) || ((kingside && board->getPiece(rank, file+1) != nullptr) ||
+          (!kingside && board->getPiece(rank, file-1) != nullptr)) ) {
             printf("  Invalid move, castle cannot contain any pieces between the King and Rook.\n");
             return false;
         }
@@ -53,58 +53,43 @@ bool King::validateMove(int r, int c, ChessBoard *board) {
         if(!board->castle(team, kingside)) {
             return false;
         }
-
-        // save the rook that is being castled
-        int rookCol = (kingside) ? 7 : 0;
-        castledRook = board->getPiece(row, rookCol)->getPointer().rook;
-    } else {
-        castledRook = nullptr;
     }
 
     // propose move
-    proposedRow = r;
-    proposedCol = c;
+    proposedRank = r;
+    proposedFile = f;
 
     return true;
 }
 
 void King::makeMove() {
     // check for valid move
-    if(proposedRow < 0 || proposedCol < 0) {
+    if(proposedRank < 0 || proposedFile < 0) {
         printf("Error: makeMove() attempted to make an invalid move.\n");
         exit(99);
     }
 
     // mave move
-    row = proposedRow;
-    col = proposedCol;
+    rank = proposedRank;
+    file = proposedFile;
 
     // reset proposed move
-    proposedRow = -1;
-    proposedCol = -1;
+    proposedRank = -1;
+    proposedFile = -1;
 
     hasNotMoved = false;
-
-    // execute castle
-    castledRook->makeMove();
-
-    // reset castle
-    castledRook = nullptr;
 }
 
-int King::getRow() {
-    return row;
+int King::getRank() {
+    return rank;
 }
 
-int King::getCol() {
-    return col;
+int King::getFile() {
+    return file;
 }
 
 void King::resetValidation() {
     // reset proposed move
-    proposedRow = -1;
-    proposedCol = -1;
-
-    // reset castle
-    castledRook = nullptr;
+    proposedRank = -1;
+    proposedFile = -1;
 }
